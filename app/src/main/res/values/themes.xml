@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.OpenHandMobile" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.OpenHandMobile.Splash" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">#FFFFFF</item>
+
+        <item name="windowSplashScreenAnimatedIcon">@drawable/handy</item>
+
+
+        <item name="windowSplashScreenAnimationDuration">1</item>
+
+        <item name="postSplashScreenTheme">@style/Theme.OpenHandMobile</item>
+    </style>
+
+    <style name="Theme.OpenHandMobile" parent="android:Theme.Material.Light.NoActionBar">
+    </style>
+
 </resources>
