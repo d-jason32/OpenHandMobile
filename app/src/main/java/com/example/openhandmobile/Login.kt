@@ -1,18 +1,27 @@
 package com.example.openhandmobile
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,7 +54,8 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
     ) {
         // Column for the login page
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+                .padding(horizontal = 24.dp, vertical = 24.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -65,27 +75,67 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 style = TextStyle(
                     fontSize = 48.sp
                 ),
-                color = Color(0xFF00A6FF),
+                color = Color(0xFFFFFFFF),
                 modifier = Modifier.padding(top = 26.dp)
                 )
 
-            TextField(
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
                 value = email,
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(25.dp),
                 onValueChange = { email = it},
-                label = { Text("Email")}
+                label = { Text("Email")},
+
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color(0xFF00A6FF),
+                    unfocusedIndicatorColor = Color(0xFFFFFFFF),
+                    focusedLabelColor = Color(0xFF00A6FF),
+                    unfocusedLabelColor = Color(0xFFAAAAAA),
+                    cursorColor = Color(0xFF00A6FF),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
+                )
             )
 
-            TextField(
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
                 value = password,
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(25.dp),
                 onValueChange = { password = it},
-                label = { Text("Password")}
+                label = { Text("Password")},
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color(0xFF00A6FF),
+                    unfocusedIndicatorColor = Color(0xFFFFFFFF),
+                    focusedLabelColor = Color(0xFF00A6FF),
+                    unfocusedLabelColor = Color(0xFFAAAAAA),
+                    cursorColor = Color(0xFF00A6FF),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
+                )
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Button for login
-            ElevatedButton(
+            Button(
+                shape = RoundedCornerShape(25.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.DarkGray
+                    containerColor = Color(0xFFFFFFFF),
+                    contentColor = Color(0xFF000000)
                 ),
                 onClick = {
                     // All fields must be filled in
@@ -105,16 +155,27 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                     }
                 }
             ) {
-                Text("Login")
+                Text("Sign in",
+                    fontSize = 14.sp)
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Button to go to the register account page
-            ElevatedButton(
+            Button(
+                shape = RoundedCornerShape(25.dp),
+
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.DarkGray
+                    containerColor = Color.White,
+                    contentColor = Color.Black
                 ),
                 onClick = { nav.navigate("register") }
             ) {
-                Text("Don't have an account? Register")
+                Text("Don't have an account? Register",
+                    fontSize = 14.sp)
             }
 
         }

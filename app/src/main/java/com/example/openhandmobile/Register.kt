@@ -1,20 +1,27 @@
 package com.example.openhandmobile
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,8 +44,7 @@ import com.example.openhandmobile.ui.theme.Raleway
 fun RegisterScreen(nav: NavHostController){
     val context = LocalContext.current
     // needed for the text boxes
-    var name by remember { mutableStateOf("")}
-    var dob by remember { mutableStateOf("")}
+    var username by remember { mutableStateOf("")}
     var email by remember { mutableStateOf("")}
     var password by remember { mutableStateOf("")}
 
@@ -50,9 +56,8 @@ fun RegisterScreen(nav: NavHostController){
 
         // column for login page
         Column(
-            // Add scrolling state
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-
+            modifier = Modifier.fillMaxSize()
+                .padding(horizontal = 24.dp, vertical = 24.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -72,44 +77,95 @@ fun RegisterScreen(nav: NavHostController){
                 style = TextStyle(
                     fontSize = 48.sp
                 ),
-                color = Color(0xFF00A6FF),
+                color = Color(0xFFFFFFFF),
                 modifier = Modifier.padding(top = 26.dp)
             )
 
-            TextField(
-                value = name,
-                shape = RoundedCornerShape(12.dp),
-                onValueChange = { name = it },
-                label = { Text("First Name") }
-            )
+            Spacer(modifier = Modifier.height(16.dp))
 
-            TextField(
-                value = dob,
-                shape = RoundedCornerShape(12.dp),
-                onValueChange = { dob = it },
-                label = { Text("Date of Birth") }
-            )
-
-            TextField(
+            OutlinedTextField(
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
                 value = email,
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(25.dp),
                 onValueChange = { email = it },
-                label = { Text("Email") }
+                label = { Text("Email") },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color(0xFF00A6FF),
+                    unfocusedIndicatorColor = Color(0xFFFFFFFF),
+                    focusedLabelColor = Color(0xFF00A6FF),
+                    unfocusedLabelColor = Color(0xFFAAAAAA),
+                    cursorColor = Color(0xFF00A6FF),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
+                )
             )
-            TextField(
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = username,
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(25.dp),
+                onValueChange = { username = it },
+                label = { Text("Username") },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color(0xFF00A6FF),
+                    unfocusedIndicatorColor = Color(0xFFFFFFFF),
+                    focusedLabelColor = Color(0xFF00A6FF),
+                    unfocusedLabelColor = Color(0xFFAAAAAA),
+                    cursorColor = Color(0xFF00A6FF),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
+                )
+
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
                 value = password,
-                shape = RoundedCornerShape(12.dp),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(25.dp),
                 onValueChange = { password = it },
-                label = { Text("Password") }
+                label = { Text("Password") },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color(0xFF00A6FF),
+                    unfocusedIndicatorColor = Color(0xFFFFFFFF),
+                    focusedLabelColor = Color(0xFF00A6FF),
+                    unfocusedLabelColor = Color(0xFFAAAAAA),
+                    cursorColor = Color(0xFF00A6FF),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
+                )
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Button to be able to create your account
-            ElevatedButton(
+            Button(
+                shape = RoundedCornerShape(25.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.DarkGray
+                    containerColor = Color(0xFFFFFFFF),
+                    contentColor = Color(0xFF000000)
                 ),
                 onClick = {
-                    if (email.isBlank() || password.isBlank() || dob.isBlank() || name.isBlank()) {
+                    if (email.isBlank() || password.isBlank() || username.isBlank()) {
                         Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_SHORT).show()
                     }
                     // Password must be greater than 6 and less than 30 characters
@@ -126,23 +182,7 @@ fun RegisterScreen(nav: NavHostController){
                             .show()
                     }
 
-                    // First name must be greater than 3 and less than 30 characters
-                    else if (name.length < 3 || name.length > 30) {
-                        Toast.makeText(
-                            context,
-                            "First name must be greater than 3 and less than 30 characters.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    // Date of birth must be valid using regex.
-                    else if (!dob.matches("^(0[1-9]|1[0-2])/([0][1-9]|[12][0-9]|3[01])/\\d{4}$".toRegex())) {
-                        Toast.makeText(
-                            context,
-                            "Please enter a valid date of birth MM/DD/YYYY",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
+                     else {
                         Toast.makeText(
                             context,
                             "Successful account creation, go back to log in!",
@@ -151,17 +191,27 @@ fun RegisterScreen(nav: NavHostController){
                     }
                 }
             ) {
-                Text("Create account")
+                Text("Sign up",
+                    fontSize = 14.sp)
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Button to go back to the log in screen if you already have an account
-            ElevatedButton(
+            Button(
+                shape = RoundedCornerShape(25.dp),
+
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.DarkGray
+                    containerColor = Color.White,
+                    contentColor = Color.Black
                 ),
                 onClick = { nav.popBackStack() }
             ) {
-                Text("Already have an account? Login")
+                Text("Already have an account? Login",
+                    fontSize = 14.sp)
             }
 
         }
