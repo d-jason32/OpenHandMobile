@@ -4,8 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.openhandmobile.ui.theme.OpenHandMobileTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,18 +20,55 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OpenHandMobileTheme {
-                IntroductionScreen()
+                MyApp(modifier = Modifier.fillMaxSize())
             }
         }
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
     OpenHandMobileTheme {
         IntroductionScreen()
+    }
+}
+
+@Preview
+@Composable
+fun MyAppPreview() {
+    OpenHandMobileTheme {
+        MyApp(Modifier.fillMaxSize())
+    }
+}
+
+// Main app function to allow for navigation
+@Composable
+fun MyApp(modifier: Modifier = Modifier) {
+    // Needed to create a navigation controller
+    val nav = rememberNavController()
+
+    Surface(modifier) {
+        NavHost(
+            navController = nav,
+            // app will start at the introduction screen
+            startDestination = "intro"
+        ) {
+            composable("intro") {
+
+                IntroductionScreen(
+                    onContinueClicked = {
+                        nav.navigate("login") {
+                            popUpTo("intro") { inclusive = true }
+                        }
+                    }
+                )
+            }
+            // Route for the login screen
+            composable("login") { Login(nav) }
+
+            // route for the register screen
+            composable("register") { RegisterScreen(nav) }
+        }
     }
 }
