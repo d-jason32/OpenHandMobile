@@ -3,23 +3,30 @@ package com.example.openhandmobile
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -35,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -47,11 +55,46 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("")}
     var password by remember { mutableStateOf("")}
 
+    @Composable
+    fun OrDivider() {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            HorizontalDivider(
+                color = Color(0xFFFFFFFF),
+                thickness = 1.dp,
+                modifier = Modifier.weight(1f)
+            )
+            Text(
+                text = "OR",
+                color = Color.White,
+                fontFamily = Raleway,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+            HorizontalDivider(
+                color = Color(0xFFFFFFFF),
+                thickness = 1.dp,
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
+
+
     Surface(
         color = Color(0xFF1A1A1A),
         modifier = Modifier.fillMaxSize()
 
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(22.dp)
+        ) {
         // Column for the login page
         Column(
             modifier = Modifier.fillMaxSize()
@@ -67,7 +110,6 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                     .size(170.dp)
 
             )
-
 
             Text("Sign in",
                 fontFamily = Raleway,
@@ -139,7 +181,7 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
             Button(
                 shape = RoundedCornerShape(25.dp),
                 modifier = Modifier.fillMaxWidth()
-                    .height(56.dp),
+                    .heightIn(min = 56.dp),
                 border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFFFFFF),
@@ -164,31 +206,64 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 }
             ) {
                 Text("Sign in",
-                    fontSize = 14.sp)
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold)
+            }
+
+            OrDivider()
+
+            Button(
+                onClick = {  },
+                shape = RoundedCornerShape(25.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .heightIn(min = 56.dp),
+                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFFFFFFF),
+                )
+            ) {
+                Text("Continue with Google",
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {  },
+                shape = RoundedCornerShape(25.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .heightIn(min = 56.dp),
+                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFFFFFFF))
+            ) {
+                Text(
+                    "Continue with GitHub",
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Button to go to the register account page
-            Button(
-                shape = RoundedCornerShape(25.dp),
-
-                modifier = Modifier.fillMaxWidth()
-                    .height(56.dp),
-                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black
-                ),
-                onClick = { nav.navigate("register") }
-            ) {
-                Text("Don't have an account? Register",
-                    fontSize = 14.sp)
-            }
-
-
+            Text("Don't have an account? Register",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { nav.navigate("register")
+            })
 
         }
 
+
+
     }
 }
+    }
