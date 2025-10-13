@@ -15,13 +15,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -147,6 +152,13 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                     fontSize = 14.sp,
                     color = Color.White
                 ),
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Email,
+                        contentDescription = "Email Icon",
+                        tint = Color(0xFF00A6FF)
+                    )
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -171,8 +183,14 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 ),
                 textStyle = TextStyle(
                     fontSize = 14.sp,
-                    color = Color.White
-            ),
+                    color = Color.White),
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Lock,
+                        contentDescription = "Lock Icon",
+                        tint = Color(0xFF00A6FF)
+                    )
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -222,6 +240,12 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                     containerColor = Color(0xFFFFFFFF),
                 )
             ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_google),
+                    contentDescription = "Google Logo",
+                    modifier = Modifier.size(28.dp),
+                )
+                Spacer(Modifier.width(8.dp))
                 Text("Continue with Google",
                     fontSize = 16.sp,
                     color = Color.Black,
@@ -241,6 +265,12 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFFFFFF))
             ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_github2),
+                    contentDescription = "Google Logo",
+                    modifier = Modifier.size(34.dp),
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     "Continue with GitHub",
                     fontSize = 16.sp,

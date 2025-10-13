@@ -16,9 +16,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -113,6 +119,13 @@ fun RegisterScreen(nav: NavHostController) {
                         fontSize = 14.sp,
                         color = Color.White
                     ),
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Email,
+                            contentDescription = "Email Icon",
+                            tint = Color(0xFF00A6FF)
+                        )
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -140,6 +153,13 @@ fun RegisterScreen(nav: NavHostController) {
                         fontSize = 14.sp,
                         color = Color.White
                     ),
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Person,
+                            contentDescription = "Person Icon",
+                            tint = Color(0xFF00A6FF)
+                        )
+                    }
 
                     )
 
@@ -168,6 +188,13 @@ fun RegisterScreen(nav: NavHostController) {
                         fontSize = 16.sp,
                         color = Color.White
                     ),
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Lock,
+                            contentDescription = "Lock Icon",
+                            tint = Color(0xFF00A6FF)
+                        )
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
