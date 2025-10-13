@@ -101,7 +101,11 @@ fun RegisterScreen(nav: NavHostController){
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent
-                )
+                ),
+                textStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.White
+                ),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -124,7 +128,11 @@ fun RegisterScreen(nav: NavHostController){
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent
-                )
+                ),
+                textStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.White
+                ),
 
             )
 
@@ -148,7 +156,11 @@ fun RegisterScreen(nav: NavHostController){
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent
-                )
+                ),
+                textStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.White
+                ),
             )
 
             Spacer(modifier = Modifier.height(16.dp))

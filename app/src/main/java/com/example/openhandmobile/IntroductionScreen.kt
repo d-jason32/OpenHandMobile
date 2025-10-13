@@ -126,6 +126,7 @@ fun IntroductionScreen(
                             color = Color(0xFFFFFFFF)
                         )
                     }
+
                 }
             }
         }

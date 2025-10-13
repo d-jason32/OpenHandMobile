@@ -100,7 +100,11 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent
-                )
+                ),
+                textStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.White
+                ),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -122,7 +126,11 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent
-                )
+                ),
+                textStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.White
+            ),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -177,6 +185,8 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 Text("Don't have an account? Register",
                     fontSize = 14.sp)
             }
+
+
 
         }
 
