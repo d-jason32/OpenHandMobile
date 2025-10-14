@@ -69,6 +69,9 @@ fun MyApp(modifier: Modifier = Modifier) {
 
             // route for the register screen
             composable("register") { RegisterScreen(nav) }
+
+            // Route for the home page
+            composable("home") { Home(nav) }
         }
     }
 }

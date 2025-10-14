@@ -41,7 +41,6 @@ fun IntroductionScreen(
             containerColor = Color(0xFF1A1A1A),
             modifier = Modifier.fillMaxSize()
 
-
         ) { paddingValues ->
             Box(
                 modifier = Modifier
@@ -110,7 +109,6 @@ fun IntroductionScreen(
                     ) {
                         Text("GET STARTED")
                     }
-
 
                     OutlinedButton(
                         onClick = { onLoginClicked() },

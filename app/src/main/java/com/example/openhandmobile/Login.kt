@@ -219,7 +219,7 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                         Toast.makeText(context, "Please enter a valid email", Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        Toast.makeText(context, "Successful sign on", Toast.LENGTH_SHORT).show()
+                        nav.navigate("home")
                     }
                 }
             ) {
@@ -252,7 +252,6 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                     fontWeight = FontWeight.Bold
                 )
             }
-
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -287,13 +286,10 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable { nav.navigate("register")
-            })
+                modifier = Modifier.clickable { nav.navigate("register") })
 
         }
 
-
-
     }
 }
-    }
+}
