@@ -58,10 +58,10 @@ fun IntroductionScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.handy_white_logo),
+                        painter = painterResource(id = R.drawable.scholar_smiley),
                         contentDescription = "Handy",
                         modifier = Modifier
-                            .size(170.dp)
+                            .size(250.dp)
 
                     )
 
