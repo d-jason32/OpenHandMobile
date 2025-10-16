@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
+import com.example.squares.Squares
 
 @Composable
 fun RegisterScreen(nav: NavHostController) {
@@ -67,6 +68,13 @@ fun RegisterScreen(nav: NavHostController) {
                 .fillMaxSize()
                 .padding(22.dp)
         ) {
+            Squares(
+                speedPxPerSec = 60f,
+                borderColor = Color(0xFF424141),
+                squareSize = 40.dp,
+                modifier = Modifier.matchParentSize()
+            )
+
             // column for login page
             Column(
                 modifier = Modifier.fillMaxSize()

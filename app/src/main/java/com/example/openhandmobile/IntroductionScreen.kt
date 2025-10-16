@@ -24,13 +24,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.openhandmobile.ui.theme.Raleway
+import com.example.squares.Squares
+
 
 @Composable
 fun IntroductionScreen(
@@ -38,8 +44,10 @@ fun IntroductionScreen(
     onLoginClicked: () -> Unit = {}
 ) {
         Scaffold(
+
             containerColor = Color(0xFF1A1A1A),
             modifier = Modifier.fillMaxSize()
+
 
         ) { paddingValues ->
             Box(
@@ -47,7 +55,14 @@ fun IntroductionScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
                     .padding(22.dp)
+                    .fillMaxSize()
             ) {
+                Squares(
+                    speedPxPerSec = 60f,
+                    borderColor = Color(0xFF424141),
+                    squareSize = 40.dp,
+                    modifier = Modifier.matchParentSize()
+                )
 
                 Column(
                     modifier = Modifier
@@ -58,7 +73,7 @@ fun IntroductionScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.scholar_smiley),
+                        painter = painterResource(id = R.drawable.handy_smart_crop_fix),
                         contentDescription = "Handy",
                         modifier = Modifier
                             .size(250.dp)

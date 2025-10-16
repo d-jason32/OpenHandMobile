@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
+import com.example.squares.Squares
 
 @Composable
 fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
@@ -100,6 +101,12 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .padding(22.dp)
         ) {
+            Squares(
+                speedPxPerSec = 60f,
+                borderColor = Color(0xFF424141),
+                squareSize = 40.dp,
+            )
+
         // Column for the login page
         Column(
             modifier = Modifier.fillMaxSize()
@@ -108,6 +115,9 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
+
+
+
             Image(
                 painter = painterResource(id = R.drawable.handy_closed_eyes),
                 contentDescription = "Handy",
