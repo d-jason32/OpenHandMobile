@@ -69,9 +69,6 @@ fun RegisterScreen(nav: NavHostController) {
                 .padding(22.dp)
         ) {
             Squares(
-                speedPxPerSec = 60f,
-                borderColor = Color(0xFF424141),
-                squareSize = 40.dp,
                 modifier = Modifier.matchParentSize()
             )
 

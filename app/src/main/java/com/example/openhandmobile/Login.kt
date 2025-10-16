@@ -102,9 +102,7 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                 .padding(22.dp)
         ) {
             Squares(
-                speedPxPerSec = 60f,
-                borderColor = Color(0xFF424141),
-                squareSize = 40.dp,
+
             )
 
         // Column for the login page

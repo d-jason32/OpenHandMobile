@@ -58,9 +58,6 @@ fun IntroductionScreen(
                     .fillMaxSize()
             ) {
                 Squares(
-                    speedPxPerSec = 60f,
-                    borderColor = Color(0xFF424141),
-                    squareSize = 40.dp,
                     modifier = Modifier.matchParentSize()
                 )
 
