@@ -20,11 +20,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,6 +46,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -57,6 +63,8 @@ fun RegisterScreen(nav: NavHostController) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var visible2 by remember { mutableStateOf(false) }
+
 
     Surface(
         color = Color(0xFF1A1A1A),
@@ -193,13 +201,22 @@ fun RegisterScreen(nav: NavHostController) {
                         fontSize = 16.sp,
                         color = Color.White
                     ),
+
+                    visualTransformation =
+                        if (visible2) VisualTransformation.None
+
+                        else PasswordVisualTransformation(),
+
                     trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Lock,
-                            contentDescription = "Lock Icon",
-                            tint = Color(0xFF00A6FF)
-                        )
-                    }
+                        IconButton(onClick = { visible2 = !visible2 }) {
+                            Icon(
+                                imageVector = if (visible2) Icons.Outlined.Visibility
+                                else Icons.Outlined.VisibilityOff,
+                                contentDescription = if (visible2) "Hide password" else "Show password",
+                                tint = Color(0xFF00A6FF)
+                            )
+                        }
+                    },
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
