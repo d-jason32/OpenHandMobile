@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    //id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -65,4 +67,5 @@ dependencies {
     //implementation("androidx.compose.material3:material3-*:1.5.0-alpha06")
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("io.coil-kt:coil-gif:2.7.0")
+    implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
 }
