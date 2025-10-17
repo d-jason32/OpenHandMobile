@@ -1,5 +1,7 @@
 package com.example.openhandmobile
 
+import android.credentials.GetCredentialRequest
+import android.provider.Settings.Global.getString
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -58,6 +60,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @Composable
 fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
@@ -66,6 +71,7 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("")}
     var password by remember { mutableStateOf("")}
     var visible by remember { mutableStateOf(false) }
+    val auth = Firebase.auth
 
     @Composable
     fun OrDivider() {
@@ -242,7 +248,19 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                         Toast.makeText(context, "Please enter a valid email", Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        nav.navigate("home")
+                        auth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+
+                                    nav.navigate("home") {
+                                        popUpTo("intro") { inclusive = true }
+                                    }
+                                } else {
+                                    val msg = task.exception?.localizedMessage ?: "Authentication failed."
+                                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
                     }
                 }
             ) {
@@ -254,7 +272,8 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
             OrDivider()
 
             Button(
-                onClick = {  },
+                onClick = {
+                },
                 shape = RoundedCornerShape(25.dp),
                 modifier = Modifier.fillMaxWidth()
                     .heightIn(min = 56.dp),

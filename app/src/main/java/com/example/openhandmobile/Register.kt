@@ -13,26 +13,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,13 +41,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @Composable
 fun RegisterScreen(nav: NavHostController) {
@@ -64,6 +58,7 @@ fun RegisterScreen(nav: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var visible2 by remember { mutableStateOf(false) }
+    val auth = Firebase.auth
 
 
     Surface(
@@ -254,11 +249,17 @@ fun RegisterScreen(nav: NavHostController) {
                             )
                                 .show()
                         } else {
-                            Toast.makeText(
-                                context,
-                                "Successful account creation, go back to log in!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            auth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        nav.navigate("login") {
+                                            popUpTo("register") { inclusive = true }
+                                        }
+                                    } else {
+                                        val msg = task.exception?.localizedMessage ?: "Account creation failed."
+                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                         }
                     }
                 ) {
@@ -278,7 +279,7 @@ fun RegisterScreen(nav: NavHostController) {
                     color = Color.White,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable {
-                        nav.popBackStack()
+                        nav.navigate("login")
                     })
 
             }

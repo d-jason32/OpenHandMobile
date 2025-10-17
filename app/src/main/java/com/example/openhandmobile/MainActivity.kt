@@ -1,6 +1,8 @@
 package com.example.openhandmobile
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,17 +15,37 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.openhandmobile.ui.theme.OpenHandMobileTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
 
 class MainActivity : ComponentActivity() {
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        auth = Firebase.auth
+
         setContent {
             OpenHandMobileTheme {
                 MyApp(modifier = Modifier.fillMaxSize())
             }
         }
     }
+
+    public override fun onStart() {
+        super.onStart()
+
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+
+        }
+    }
+
+
 }
 
 @Preview(showBackground = true)
@@ -44,7 +66,9 @@ fun MyAppPreview() {
 
 // Main app function to allow for navigation
 @Composable
-fun MyApp(modifier: Modifier = Modifier) {
+fun MyApp(
+    modifier: Modifier = Modifier)
+{
     // Needed to create a navigation controller
     val nav = rememberNavController()
 
