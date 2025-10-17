@@ -58,10 +58,19 @@ fun MyApp(modifier: Modifier = Modifier) {
 
                 IntroductionScreen(
                     onContinueClicked = {
+                        nav.navigate("register") {
+                            popUpTo("intro") { inclusive = true }
+                        }
+                    },
+                    onLoginClicked = {
                         nav.navigate("login") {
                             popUpTo("intro") { inclusive = true }
                         }
-                    }
+                    },
+
+
+
+
                 )
             }
             // Route for the login screen
