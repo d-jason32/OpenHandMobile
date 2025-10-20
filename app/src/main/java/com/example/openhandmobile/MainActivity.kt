@@ -108,6 +108,16 @@ fun MyApp(
 
             // Route for the home page
             composable("CameraTest") { CameraTest(nav) }
+
+            composable("Classes") { Classes(nav) }
+
+            composable("Roadmap") { Roadmap(nav) }
+
+            composable("Settings") { Settings(nav) }
+
+            composable("Profile") { Profile(nav) }
+
+
         }
     }
 }

@@ -29,7 +29,7 @@ fun BottomNavBar(navController: NavHostController) {
     val items = listOf("Home", "Classes", "Roadmap", "Test", "Settings", "Profile")
     val icons = listOf(Icons.Outlined.Home, Icons.Outlined.Book, Icons.Outlined.Route, Icons.Outlined.Science, Icons.Outlined.Settings, Icons.Outlined.Person)
 
-    val routes = listOf("home", "classes", "roadmap", "CameraTest", "settings", "profile")
+    val routes = listOf("Home", "Classes", "Roadmap", "CameraTest", "Settings", "Profile")
 
     NavigationBar(
         containerColor = Color.Black,
