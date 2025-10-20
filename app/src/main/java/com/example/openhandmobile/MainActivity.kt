@@ -105,6 +105,9 @@ fun MyApp(
 
             // Route for the home page
             composable("home") { Home(nav) }
+
+            // Route for the home page
+            composable("CameraTest") { CameraTest(nav) }
         }
     }
 }
