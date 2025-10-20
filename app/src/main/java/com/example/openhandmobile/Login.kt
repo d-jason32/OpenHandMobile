@@ -1,8 +1,13 @@
 package com.example.openhandmobile
 
-import android.credentials.GetCredentialRequest
-import android.provider.Settings.Global.getString
+import android.content.ContentValues.TAG
+import android.os.Build
+import android.util.Log
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.CredentialManager
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -53,17 +58,28 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.Firebase
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import androidx.credentials.CustomCredential
+import kotlinx.coroutines.launch
+import android.app.Activity
+import androidx.compose.runtime.rememberCoroutineScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.OAuthProvider
+import kotlinx.coroutines.tasks.await
 
+
+
+
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -72,6 +88,8 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
     var password by remember { mutableStateOf("")}
     var visible by remember { mutableStateOf(false) }
     val auth = Firebase.auth
+    val activity = context as Activity
+    val scope = rememberCoroutineScope()
 
     @Composable
     fun OrDivider() {
@@ -273,6 +291,9 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
+                    scope.launch {
+
+                    }
                 },
                 shape = RoundedCornerShape(25.dp),
                 modifier = Modifier.fillMaxWidth()
@@ -297,8 +318,59 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            /*
+            GitHub sign in
+             */
             Button(
-                onClick = {  },
+                onClick = {
+                    val provider = OAuthProvider.newBuilder("github.com")
+
+                    val pendingResultTask = auth.pendingAuthResult
+                    if (pendingResultTask != null) {
+                        // There's something already here! Finish the sign-in for your user.
+                        pendingResultTask
+                            .addOnSuccessListener {
+                                // User is signed in.
+                                // IdP data available in
+                                // authResult.getAdditionalUserInfo().getProfile().
+                                // The OAuth access token can also be retrieved:
+                                // ((OAuthCredential)authResult.getCredential()).getAccessToken().
+                                // The OAuth secret can be retrieved by calling:
+                                // ((OAuthCredential)authResult.getCredential()).getSecret().
+                                Log.d(TAG, "GitHub sign-in success:")
+
+                                nav.navigate("home") {
+                                    popUpTo("intro") { inclusive = true }
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                // Handle failure.
+                                Toast.makeText(context, "Sign-in failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        auth
+                            .startActivityForSignInWithProvider(activity, provider.build())
+                            .addOnSuccessListener { authResult ->
+                                // User is signed in.
+                                // IdP data available in
+                                // authResult.getAdditionalUserInfo().getProfile().
+                                // The OAuth access token can also be retrieved:
+                                // ((OAuthCredential)authResult.getCredential()).getAccessToken().
+                                // The OAuth secret can be retrieved by calling:
+                                // ((OAuthCredential)authResult.getCredential()).getSecret().
+                                Log.d(TAG, "GitHub sign-in success: ${authResult.user?.uid}")
+                                nav.navigate("home") {
+                                    popUpTo("intro") { inclusive = true }
+                                }
+
+                            }
+                            .addOnFailureListener { e ->
+                                // Handle failure.
+                                Log.e(TAG, "GitHub sign-in failed (start flow)", e)
+                                Toast.makeText(context, "Sign-in failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                },
                 shape = RoundedCornerShape(25.dp),
                 modifier = Modifier.fillMaxWidth()
                     .heightIn(min = 56.dp),
@@ -333,5 +405,11 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
         }
 
     }
+
 }
+
+
+    
 }
+
+
