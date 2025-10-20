@@ -193,7 +193,7 @@ fun RegisterScreen(nav: NavHostController) {
                         unfocusedContainerColor = Color.Transparent
                     ),
                     textStyle = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         color = Color.White
                     ),
 
