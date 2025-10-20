@@ -26,10 +26,10 @@ import androidx.navigation.NavHostController
 @Composable
 fun BottomNavBar(navController: NavHostController) {
     var selectedItem by remember { mutableStateOf(0) }
-    val items = listOf("Home", "Classes", "Roadmap", "Test", "Settings", "Profile")
+    val items = listOf("home", "classes", "roadmap", "test", "settings", "profile")
     val icons = listOf(Icons.Outlined.Home, Icons.Outlined.Book, Icons.Outlined.Route, Icons.Outlined.Science, Icons.Outlined.Settings, Icons.Outlined.Person)
 
-    val routes = listOf("Home", "Classes", "Roadmap", "CameraTest", "Settings", "Profile")
+    val routes = listOf("home", "classes", "roadmap", "cameraTest", "settings", "profile")
 
     NavigationBar(
         containerColor = Color.Black,

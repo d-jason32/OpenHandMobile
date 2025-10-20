@@ -107,15 +107,15 @@ fun MyApp(
             composable("home") { Home(nav) }
 
             // Route for the home page
-            composable("CameraTest") { CameraTest(nav) }
+            composable("cameraTest") { CameraTest(nav) }
 
-            composable("Classes") { Classes(nav) }
+            composable("classes") { Classes(nav) }
 
-            composable("Roadmap") { Roadmap(nav) }
+            composable("roadmap") { Roadmap(nav) }
 
-            composable("Settings") { Settings(nav) }
+            composable("settings") { Settings(nav) }
 
-            composable("Profile") { Profile(nav) }
+            composable("profile") { Profile(nav) }
 
 
         }
