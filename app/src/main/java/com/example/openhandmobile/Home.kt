@@ -20,6 +20,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Navigation
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Route
+import androidx.compose.material.icons.outlined.Science
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -57,8 +58,8 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
     @Composable
     fun BottomNavBar() {
         var selectedItem by remember { mutableStateOf(0) }
-        val items = listOf("Home", "Classes", "Roadmap", "Settings", "Profile")
-        val icons = listOf(Icons.Outlined.Home, Icons.Outlined.Book, Icons.Outlined.Route, Icons.Outlined.Settings, Icons.Outlined.Person)
+        val items = listOf("Home", "Classes", "Roadmap", "Test", "Settings", "Profile")
+        val icons = listOf(Icons.Outlined.Home, Icons.Outlined.Book, Icons.Outlined.Route, Icons.Outlined.Science, Icons.Outlined.Settings, Icons.Outlined.Person)
 
         NavigationBar(
             containerColor = Color.Black,
