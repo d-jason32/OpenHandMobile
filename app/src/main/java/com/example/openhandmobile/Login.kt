@@ -291,9 +291,18 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
-                    scope.launch {
+                    val clientId = context.getString(R.string.default_web_client_id)
 
-                    }
+                    val googleIdOption = GetGoogleIdOption.Builder()
+                        // Your server's client ID, not your Android client ID.
+                        .setServerClientId(clientId)
+                        // Only show accounts previously used to sign in.
+                        .setFilterByAuthorizedAccounts(true)
+                        .build()
+
+                    val request = GetCredentialRequest.Builder()
+                        .addCredentialOption(googleIdOption)
+                        .build()
                 },
                 shape = RoundedCornerShape(25.dp),
                 modifier = Modifier.fillMaxWidth()
@@ -411,5 +420,6 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
 
     
 }
+
 
 
