@@ -82,6 +82,7 @@ fun MyApp(
 
                 IntroductionScreen(
                     onContinueClicked = {
+                        // SET THIS TO REGISTER!
                         nav.navigate("register") {
                             popUpTo("intro") { inclusive = true }
                         }

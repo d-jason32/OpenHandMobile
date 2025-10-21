@@ -22,7 +22,7 @@ fun Squares(
     modifier: Modifier = Modifier.fillMaxSize(),
     speed: Float = 60f,
     // color is set to allow the top elements to show through
-    borderColor: Color = Color(0xFF333232),
+    borderColor: Color = Color(0xFF262525),
     // * the square size of each square will be set to equal 40 dp units
     squareSize: Dp = 40.dp
 ) {
