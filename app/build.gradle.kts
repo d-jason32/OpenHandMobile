@@ -84,5 +84,7 @@ dependencies {
 
     implementation("com.google.mediapipe:tasks-vision:0.10.29")
 
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
+
 
 }

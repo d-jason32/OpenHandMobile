@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.openhandmobile.ui.theme.Raleway
+import com.example.squares.Squares
 
 @Composable
 fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
@@ -69,7 +70,9 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
                 .padding(paddingValues)
                 .padding(22.dp)
         ) {
-
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()

@@ -19,6 +19,10 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
+import androidx.compose.runtime.SideEffect
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
@@ -26,6 +30,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
 
         auth = Firebase.auth
 
@@ -52,6 +57,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LoginScreenPreview() {
     OpenHandMobileTheme {
+
         IntroductionScreen()
     }
 }
@@ -60,6 +66,7 @@ fun LoginScreenPreview() {
 @Composable
 fun MyAppPreview() {
     OpenHandMobileTheme {
+
         MyApp(Modifier.fillMaxSize())
     }
 }
@@ -69,6 +76,8 @@ fun MyAppPreview() {
 fun MyApp(
     modifier: Modifier = Modifier)
 {
+    SetLightStatusBar()
+
     // Needed to create a navigation controller
     val nav = rememberNavController()
 
@@ -120,5 +129,19 @@ fun MyApp(
 
 
         }
+    }
+}
+
+@Composable
+fun SetLightStatusBar() {
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = false
+    val statusBarColor = Color.Black
+
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = useDarkIcons
+        )
     }
 }
