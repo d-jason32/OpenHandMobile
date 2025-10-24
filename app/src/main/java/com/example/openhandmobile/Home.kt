@@ -32,10 +32,14 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -66,9 +70,8 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
     ) { paddingValues ->
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(paddingValues)
-                .padding(22.dp)
         ) {
             Squares(
                 modifier = Modifier.matchParentSize()
@@ -76,11 +79,13 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(22.dp),
-                verticalArrangement = Arrangement.Center,
+                    .padding(paddingValues),
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                SingleChoiceSegmentedButton(
+                    modifier = modifier.fillMaxWidth())
+
                 Image(
                     painter = painterResource(id = R.drawable.handy_white_logo),
                     contentDescription = "Handy",
@@ -116,5 +121,37 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
             }
         }
     }
+
+@Composable
+fun SingleChoiceSegmentedButton(modifier: Modifier = Modifier) {
+    var selectedIndex by remember { mutableIntStateOf(0) }
+    val options = listOf("Home" ,"Leaderboard", "Friends")
+
+    SingleChoiceSegmentedButtonRow(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        options.forEachIndexed { index, label ->
+            SegmentedButton(
+                modifier = Modifier.weight(1f),
+                shape = SegmentedButtonDefaults.itemShape(
+                    index = index,
+                    count = options.size
+                ),
+                colors = SegmentedButtonDefaults.colors(
+                    activeContainerColor = Color.Transparent,
+                    inactiveContainerColor = Color.Transparent,
+                    activeContentColor = Color.White,
+                    inactiveContentColor = Color.White,
+                    activeBorderColor = Color.White,
+                    inactiveBorderColor = Color.White
+                ),
+                onClick = { selectedIndex = index },
+                selected = index == selectedIndex,
+                label = { Text(label) }
+            )
+        }
+    }
+}
 
 
