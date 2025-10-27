@@ -127,6 +127,10 @@ fun MyApp(
 
             composable("profile") { Profile(nav) }
 
+            composable("leaderboard") { LeaderboardScreen(nav) }
+
+            composable("friends") { FriendsScreen(nav) }
+
 
         }
     }
