@@ -30,11 +30,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -53,6 +56,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -74,7 +79,7 @@ fun Settings(nav: NavHostController, modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = 15.dp)
         ) {
             Squares(
                 modifier = Modifier.matchParentSize()
@@ -88,6 +93,14 @@ fun Settings(nav: NavHostController, modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                Spacer(Modifier.height(10.dp))
+
+                ProfilePanel();
+
+                Spacer(Modifier.height(10.dp))
+
+                PrivacyPanel()
+
                 Spacer(Modifier.height(10.dp))
 
                 PreferencesPanel()
@@ -165,6 +178,8 @@ fun PreferencesPanel(
                 onCheckedChange = { otherLesson = it },
                 accent = accent
             )
+
+
 
             Spacer(Modifier.height(16.dp))
             Text(
@@ -330,13 +345,7 @@ fun NotificationsPanel(
 fun SupportPanel(
     modifier: Modifier = Modifier,
 ) {
-    var push by rememberSaveable { mutableStateOf(true) }
-    var weekly by rememberSaveable { mutableStateOf(true) }
-    var daily by rememberSaveable { mutableStateOf(true) }
-    var friend by rememberSaveable { mutableStateOf(true) }
-    var product by rememberSaveable { mutableStateOf(true) }
 
-    val accent = Color(0xFF00A6FF)
 
     Card(
         modifier = modifier
@@ -396,8 +405,164 @@ fun SupportPanel(
                 )
             }
 
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProfilePanel(
+    modifier: Modifier = Modifier
+) {
+    val outline = Color(0xFFD1D3D5)
+    var firstName by rememberSaveable { mutableStateOf("") }
+    var lastName by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
+    var currentPass by rememberSaveable { mutableStateOf("") }
+    var newPass by rememberSaveable { mutableStateOf("") }
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Edit Profile",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold
+                )
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            ProfileField(label = "First Name", text = firstName, onTextChange = { firstName = it }, outline)
+            ProfileField(label = "Last Name", text = lastName, onTextChange = { lastName = it }, outline)
+            ProfileField(label = "Email", text = email, onTextChange = { email = it }, outline)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    ProfileField(
+                        label = "Current Password",
+                        text = currentPass,
+                        onTextChange = { currentPass = it },
+                        outline,
+                        isPassword = true
+                    )
+                }
+                Box(modifier = Modifier.weight(1f)) {
+                    ProfileField(
+                        label = "New Password",
+                        text = newPass,
+                        onTextChange = { newPass = it },
+                        outline,
+                        isPassword = true
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(12.dp))
+            OutlinedButton(
+                onClick = { /* save profile */ },
+                border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Save Changes",
+                    color = Color(0xFF00A6FF),
+                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ProfileField(
+    label: String,
+    text: String,
+    onTextChange: (String) -> Unit,
+    outlineColor: Color,
+    isPassword: Boolean = false
+) {
+    OutlinedTextField(
+        value = text,
+        onValueChange = onTextChange,
+        label = { Text(label, color = Color.Gray) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
+        singleLine = true,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = outlineColor,
+            unfocusedBorderColor = outlineColor.copy(alpha = 0.6f),
+            focusedLabelColor = outlineColor,
+            cursorColor = outlineColor,
+            unfocusedContainerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent
+        ),
+        textStyle = LocalTextStyle.current.copy(color = Color.White),
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
+    )
+}
 
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PrivacyPanel(
+    modifier: Modifier = Modifier,
+) {
+    var front by rememberSaveable { mutableStateOf(true) }
+    var fingerOutlines by rememberSaveable { mutableStateOf(true) }
+
+    val accent = Color(0xFF00A6FF)
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Privacy",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold
+                )
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            ToggleRow(
+                title = "Send Usage Statistics",
+                checked = front,
+                onCheckedChange = { front = it },
+                accent = accent
+            )
+
+            ToggleRow(
+                title = "Public Profile",
+                checked = fingerOutlines,
+                onCheckedChange = { fingerOutlines = it },
+                accent = accent
+            )
+
+            Spacer(Modifier.height(16.dp))
 
         }
     }
