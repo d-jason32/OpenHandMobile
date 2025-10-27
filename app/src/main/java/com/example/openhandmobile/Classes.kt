@@ -56,7 +56,9 @@ import com.example.squares.Squares
 
 @Composable
 fun Classes(nav: NavHostController, modifier: Modifier = Modifier) {
-    val lessons = ('A'..'Z').map { "$it" }
+    val letters = ('A'..'Z').map { "$it" }
+    val numbers = ('0'..'9').map { "$it" }
+
 
     Scaffold(
         containerColor = Color(0xFF1A1A1A),
@@ -94,9 +96,32 @@ fun Classes(nav: NavHostController, modifier: Modifier = Modifier) {
                 )
             }
 
-            items(lessons) { lesson ->
+            items(letters) { lesson ->
                 LessonBox(
                     title = "$lesson",
+                    onClick = {
+
+                    }
+                )
+            }
+
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Text(
+                    text = "Lessons 0–9",
+                    color = Color.White,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 50.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = Raleway,
+
+                    )
+            }
+            items(numbers) { lesson ->
+                LessonBox(
+                    title = "$numbers",
                     onClick = {
 
                     }
