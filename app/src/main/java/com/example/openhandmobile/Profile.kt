@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
+import com.example.squares.Squares
 
 @Composable
 fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
@@ -50,19 +51,23 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
         ) { paddingValues ->
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(paddingValues)
-                .padding(22.dp)
         ) {
-
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(22.dp),
-                verticalArrangement = Arrangement.Center,
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                SingleChoiceSegmentedButtonFriends(
+                    nav = nav,
+                    modifier = modifier.fillMaxWidth()
+                )
+
                 Image(
                     painter = painterResource(id = R.drawable.handy_white_logo),
                     contentDescription = "Handy",
@@ -84,7 +89,7 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                 )
 
                 Text(
-                    text = "Profile",
+                    text = "Empowering Communication for All.",
                     style = TextStyle(
                         color = Color(0xFFFFFFFF),
                         fontSize = 16.sp
