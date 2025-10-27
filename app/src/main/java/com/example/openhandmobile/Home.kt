@@ -1,8 +1,10 @@
 package com.example.openhandmobile
 
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,6 +60,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
 
+
 @Composable
 fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
 
@@ -78,13 +81,14 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
             )
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 SingleChoiceSegmentedButton(
-                    modifier = modifier.fillMaxWidth())
+                    nav = nav,
+                    modifier = modifier.fillMaxWidth()
+                )
 
                 Image(
                     painter = painterResource(id = R.drawable.handy_white_logo),
@@ -121,23 +125,25 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
             }
         }
     }
-
 @Composable
-fun SingleChoiceSegmentedButton(modifier: Modifier = Modifier) {
-    var selectedIndex by remember { mutableIntStateOf(0) }
-    val options = listOf("Home" ,"Leaderboard", "Friends")
+fun SingleChoiceSegmentedButton(
+    nav: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    val labels = listOf("Home", "Leaderboard")
+    val routes = listOf("home", "leaderboard")
+
+    val backStackEntry by nav.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+    val selectedIndex = routes.indexOf(currentRoute).let { if (it >= 0) it else 0 }
 
     SingleChoiceSegmentedButtonRow(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
-        options.forEachIndexed { index, label ->
+        labels.forEachIndexed { index, label ->
             SegmentedButton(
                 modifier = Modifier.weight(1f),
-                shape = SegmentedButtonDefaults.itemShape(
-                    index = index,
-                    count = options.size
-                ),
+                shape = SegmentedButtonDefaults.itemShape(index = index, count = labels.size),
                 colors = SegmentedButtonDefaults.colors(
                     activeContainerColor = Color.Transparent,
                     inactiveContainerColor = Color.Transparent,
@@ -146,12 +152,73 @@ fun SingleChoiceSegmentedButton(modifier: Modifier = Modifier) {
                     activeBorderColor = Color.White,
                     inactiveBorderColor = Color.White
                 ),
-                onClick = { selectedIndex = index },
                 selected = index == selectedIndex,
+                onClick = {
+                    val targetRoute = routes[index]
+                    if (currentRoute != targetRoute) {
+                        nav.navigate(targetRoute) {
+                            launchSingleTop = true
+                            restoreState = true
+                            popUpTo(nav.graph.startDestinationId) { saveState = true }
+                        }
+                    }
+                },
                 label = { Text(label) }
             )
         }
     }
 }
 
+@Composable
+fun SingleChoiceSegmentedButtonFriends(
+    nav: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    val labels = listOf("Profile", "Friends")
+    val routes = listOf("profile", "friends")
 
+    val backStackEntry by nav.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+
+    val selectedIndex = when (currentRoute) {
+        "profile" -> 0
+        "friends" -> 1
+        else -> 0
+    }
+
+    SingleChoiceSegmentedButtonRow(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        labels.forEachIndexed { index, label ->
+            SegmentedButton(
+                modifier = Modifier
+                    .weight(2f),
+
+                shape = SegmentedButtonDefaults.itemShape(
+                    index = index,
+                    count = labels.size
+                ),
+                colors = SegmentedButtonDefaults.colors(
+                    activeContainerColor = Color.Transparent,
+                    inactiveContainerColor = Color.Transparent,
+                    activeContentColor = Color.White,
+                    inactiveContentColor = Color.White,
+                    activeBorderColor = Color(0xFF00A6FF),
+                    inactiveBorderColor = Color.White
+                ),
+                onClick = {
+                    val targetRoute = routes[index]
+                    if (currentRoute != targetRoute) {
+                        nav.navigate(targetRoute) {
+                            launchSingleTop = true
+                            restoreState = true
+                            popUpTo(nav.graph.startDestinationId) { saveState = true }
+                        }
+                    }
+                },
+                selected = index == selectedIndex,
+                label = { Text(label) }
+            )
+        }
+    }
+}
