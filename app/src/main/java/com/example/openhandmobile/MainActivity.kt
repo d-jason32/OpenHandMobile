@@ -86,6 +86,7 @@ fun MyApp(
             navController = nav,
             // app will start at the introduction screen
             startDestination = "home"
+            //startDestination = "intro"
         ) {
             composable("intro") {
 
@@ -130,6 +131,9 @@ fun MyApp(
             composable("leaderboard") { LeaderboardScreen(nav) }
 
             composable("friends") { FriendsScreen(nav) }
+
+            composable("modeltest") { ModelTest(nav) }
+
 
 
         }

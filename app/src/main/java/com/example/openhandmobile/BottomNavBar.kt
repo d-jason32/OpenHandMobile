@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Leaderboard
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Route
 import androidx.compose.material.icons.outlined.Science
@@ -22,14 +23,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.NavGraph.Companion.findStartDestination
 
 @Composable
 fun BottomNavBar(navController: NavHostController) {
-    var selectedItem by remember { mutableStateOf(0) }
-    val items = listOf("home", "classes", "roadmap", "test", "settings", "profile")
-    val icons = listOf(Icons.Outlined.Home, Icons.Outlined.Book, Icons.Outlined.Route, Icons.Outlined.Science, Icons.Outlined.Settings, Icons.Outlined.Person)
+    val items = listOf("home", "classes", "roadmap", "leaderboard", "settings", "profile")
+    val icons = listOf(Icons.Outlined.Home, Icons.Outlined.Book, Icons.Outlined.Route, Icons.Outlined.Leaderboard, Icons.Outlined.Settings, Icons.Outlined.Person)
 
-    val routes = listOf("home", "classes", "roadmap", "cameraTest", "settings", "profile")
+    val routes = listOf("home", "classes", "roadmap", "leaderboard", "settings", "profile")
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationBar(
         containerColor = Color.Black,
@@ -39,21 +43,17 @@ fun BottomNavBar(navController: NavHostController) {
     ) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
-                selected = selectedItem == index,
+                selected = currentRoute == routes[index],
                 onClick = {
-
-                        selectedItem = index
-                        val route = routes[index]
-
-                        if (navController.currentBackStackEntry?.destination?.route != route) {
-                            navController.navigate(route) {
-                                launchSingleTop = true
-                                restoreState = true
-                                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                            }
+                    val route = routes[index]
+                    if (navController.currentBackStackEntry?.destination?.route != route) {
+                        navController.navigate(route) {
+                            launchSingleTop = true
+                            restoreState = true
+                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                         }
-
-                          },
+                    }
+                },
                 icon = {
                     Icon(
                         imageVector = icons[index],

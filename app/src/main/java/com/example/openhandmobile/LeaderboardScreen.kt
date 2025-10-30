@@ -56,7 +56,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.BottomNavBar
 import com.example.openhandmobile.R
-import com.example.openhandmobile.SingleChoiceSegmentedButton
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
 
@@ -88,10 +87,6 @@ fun LeaderboardScreen(nav: NavHostController, modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                SingleChoiceSegmentedButton(
-                    nav = nav,
-                    modifier = modifier.fillMaxWidth()
-                )
 
                 Spacer(Modifier.height(12.dp))
 
@@ -168,7 +163,7 @@ fun LeaderboardScreen(nav: NavHostController, modifier: Modifier = Modifier) {
                     "Lorraine" to 20000,
                     "Esteban" to 950,
                     "Justin" to 720,
-                    "Esteban" to 718,
+                    "Jack" to 720,
                     "Josh" to 719,
                     "Kevin" to 500,
                     "Zoe" to 400,

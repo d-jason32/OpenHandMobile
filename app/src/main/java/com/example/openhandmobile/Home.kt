@@ -8,10 +8,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -85,16 +88,25 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                SingleChoiceSegmentedButton(
-                    nav = nav,
-                    modifier = modifier.fillMaxWidth()
-                )
+
+                Spacer(Modifier.height(24.dp))
 
                 Image(
-                    painter = painterResource(id = R.drawable.handy_white_logo),
+                    painter = painterResource(id = R.drawable.hi_transparent_copy),
                     contentDescription = "Handy",
                     modifier = Modifier
-                        .size(170.dp)
+                        .width(250.dp)
+
+                )
+
+                Spacer(Modifier.height(10.dp))
+
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(250.dp)
 
                 )
 
@@ -121,53 +133,56 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
                     modifier = Modifier.padding(top = 16.dp)
 
                 )
-            }
-            }
-        }
-    }
-@Composable
-fun SingleChoiceSegmentedButton(
-    nav: NavHostController,
-    modifier: Modifier = Modifier
-) {
-    val labels = listOf("Home", "Leaderboard")
-    val routes = listOf("home", "leaderboard")
 
-    val backStackEntry by nav.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route
-    val selectedIndex = routes.indexOf(currentRoute).let { if (it >= 0) it else 0 }
 
-    SingleChoiceSegmentedButtonRow(
-        modifier = modifier.fillMaxWidth()
-    ) {
-        labels.forEachIndexed { index, label ->
-            SegmentedButton(
-                modifier = Modifier.weight(1f),
-                shape = SegmentedButtonDefaults.itemShape(index = index, count = labels.size),
-                colors = SegmentedButtonDefaults.colors(
-                    activeContainerColor = Color.Transparent,
-                    inactiveContainerColor = Color.Transparent,
-                    activeContentColor = Color.White,
-                    inactiveContentColor = Color.White,
-                    activeBorderColor = Color.White,
-                    inactiveBorderColor = Color.White
-                ),
-                selected = index == selectedIndex,
-                onClick = {
-                    val targetRoute = routes[index]
-                    if (currentRoute != targetRoute) {
-                        nav.navigate(targetRoute) {
-                            launchSingleTop = true
-                            restoreState = true
-                            popUpTo(nav.graph.startDestinationId) { saveState = true }
-                        }
-                    }
-                },
-                label = { Text(label) }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             )
+            {
+                OutlinedButton(
+                    onClick = {  },
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color(0xFF00A6FF)
+                    )
+                ) {
+                    Text("Continue lesson",
+                        fontSize = 16.sp)
+                }
+
+                OutlinedButton(
+                    onClick = { nav.navigate("modeltest") },
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+
+                ) {
+                    Text(
+                        "Try the model",
+                        color = Color(0xFFFFFFFF),
+                            fontSize = 16.sp)
+
+                }
+
+                Spacer(Modifier.height(10.dp))
+
+
+            }
+            }
         }
     }
-}
+
 
 @Composable
 fun SingleChoiceSegmentedButtonFriends(
@@ -187,7 +202,7 @@ fun SingleChoiceSegmentedButtonFriends(
     }
 
     SingleChoiceSegmentedButtonRow(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth().padding(horizontal = 10.dp)
     ) {
         labels.forEachIndexed { index, label ->
             SegmentedButton(
