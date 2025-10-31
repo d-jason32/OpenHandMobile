@@ -89,6 +89,8 @@ dependencies {
     implementation("androidx.window:window:1.1.0-alpha03")
 
     implementation("com.google.mediapipe:tasks-vision:0.10.29")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.code.gson:gson:2.13.2")
 
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
 
