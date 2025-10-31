@@ -135,290 +135,293 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
 
             )
 
-        // Column for the login page
-        Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 24.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            // Column for the login page
+            Column(
+                modifier = Modifier.fillMaxSize()
+                    .padding(horizontal = 24.dp, vertical = 24.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
 
-        ) {
+                ) {
 
 
 
-            Image(
-                painter = painterResource(id = R.drawable.handy_closed_eyes),
-                contentDescription = "Handy",
-                modifier = Modifier
-                    .size(170.dp)
+                Image(
+                    painter = painterResource(id = R.drawable.handy_closed_eyes),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(170.dp)
 
-            )
-
-            Text("Sign in",
-                fontFamily = Raleway,
-                fontWeight = FontWeight.Bold,
-                style = TextStyle(
-                    fontSize = 48.sp
-                ),
-                color = Color(0xFFFFFFFF),
-                modifier = Modifier.padding(top = 26.dp)
                 )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Text("Sign in",
+                    fontFamily = Raleway,
+                    fontWeight = FontWeight.Bold,
+                    style = TextStyle(
+                        fontSize = 48.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    modifier = Modifier.padding(top = 26.dp)
+                )
 
-            OutlinedTextField(
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
-                    .height(56.dp),
-                value = email,
-                shape = RoundedCornerShape(25.dp),
-                onValueChange = { email = it},
-                label = { Text("Email")},
+                Spacer(modifier = Modifier.height(16.dp))
 
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color(0xFF00A6FF),
-                    unfocusedIndicatorColor = Color(0xFFFFFFFF),
-                    focusedLabelColor = Color(0xFF00A6FF),
-                    unfocusedLabelColor = Color(0xFFAAAAAA),
-                    cursorColor = Color(0xFF00A6FF),
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
-                ),
-                textStyle = TextStyle(
-                    fontSize = 14.sp,
-                    color = Color.White
-                ),
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Email,
-                        contentDescription = "Email Icon",
-                        tint = Color(0xFF00A6FF)
-                    )
-                }
-            )
+                OutlinedTextField(
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                        .height(56.dp),
+                    value = email,
+                    shape = RoundedCornerShape(25.dp),
+                    onValueChange = { email = it},
+                    label = { Text("Email")},
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth()
-                    .height(56.dp),
-                value = password,
-                shape = RoundedCornerShape(25.dp),
-                onValueChange = { password = it},
-                label = { Text("Password")},
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color(0xFF00A6FF),
-                    unfocusedIndicatorColor = Color(0xFFFFFFFF),
-                    focusedLabelColor = Color(0xFF00A6FF),
-                    unfocusedLabelColor = Color(0xFFAAAAAA),
-                    cursorColor = Color(0xFF00A6FF),
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
-                ),
-                textStyle = TextStyle(
-                    fontSize = 14.sp,
-                    color = Color.White),
-
-                visualTransformation =
-                    if (visible) VisualTransformation.None
-
-                    else PasswordVisualTransformation(),
-
-                trailingIcon = {
-                    IconButton(onClick = { visible = !visible }) {
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color(0xFF00A6FF),
+                        unfocusedIndicatorColor = Color(0xFFFFFFFF),
+                        focusedLabelColor = Color(0xFF00A6FF),
+                        unfocusedLabelColor = Color(0xFFAAAAAA),
+                        cursorColor = Color(0xFF00A6FF),
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent
+                    ),
+                    textStyle = TextStyle(
+                        fontSize = 14.sp,
+                        color = Color.White
+                    ),
+                    trailingIcon = {
                         Icon(
-                            imageVector = if (visible) Icons.Outlined.Visibility
-                            else Icons.Outlined.VisibilityOff,
-                            contentDescription = if (visible) "Hide password" else "Show password",
+                            imageVector = Icons.Outlined.Email,
+                            contentDescription = "Email Icon",
                             tint = Color(0xFF00A6FF)
                         )
                     }
-                },
-            )
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Button for login
-            Button(
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier.fillMaxWidth()
-                    .heightIn(min = 56.dp),
-                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFFFFFF),
-                    contentColor = Color(0xFF000000)
-                ),
-                onClick = {
-                    // All fields must be filled in
-                    if (email.isBlank() || password.isBlank()){
-                        Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_SHORT).show()
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth()
+                        .height(56.dp),
+                    value = password,
+                    shape = RoundedCornerShape(25.dp),
+                    onValueChange = { password = it},
+                    label = { Text("Password")},
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color(0xFF00A6FF),
+                        unfocusedIndicatorColor = Color(0xFFFFFFFF),
+                        focusedLabelColor = Color(0xFF00A6FF),
+                        unfocusedLabelColor = Color(0xFFAAAAAA),
+                        cursorColor = Color(0xFF00A6FF),
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent
+                    ),
+                    textStyle = TextStyle(
+                        fontSize = 14.sp,
+                        color = Color.White),
+
+                    visualTransformation =
+                        if (visible) VisualTransformation.None
+
+                        else PasswordVisualTransformation(),
+
+                    trailingIcon = {
+                        IconButton(onClick = { visible = !visible }) {
+                            Icon(
+                                imageVector = if (visible) Icons.Outlined.Visibility
+                                else Icons.Outlined.VisibilityOff,
+                                contentDescription = if (visible) "Hide password" else "Show password",
+                                tint = Color(0xFF00A6FF)
+                            )
+                        }
+                    },
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Button for login
+                Button(
+                    shape = RoundedCornerShape(25.dp),
+                    modifier = Modifier.fillMaxWidth()
+                        .heightIn(min = 56.dp),
+                    border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFFFFF),
+                        contentColor = Color(0xFF000000)
+                    ),
+                    onClick = {
+                        // All fields must be filled in
+                        if (email.isBlank() || password.isBlank()){
+                            Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_SHORT).show()
+                        }
+                        // Password must be greater than 6 and less than 30 characters
+                        else if (password.length < 6 || password.length > 30){
+                            Toast.makeText(context, "Password must be greater than 6 and less than 30 characters.", Toast.LENGTH_SHORT).show()
+                        }
+                        // Email must be valid using regex.
+                        else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex())){
+                            Toast.makeText(context, "Please enter a valid email", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
+                            auth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+
+                                        nav.navigate("home") {
+                                            popUpTo("intro") { inclusive = true }
+                                        }
+                                    } else {
+                                        val msg = task.exception?.localizedMessage ?: "Authentication failed."
+                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                        }
                     }
-                    // Password must be greater than 6 and less than 30 characters
-                    else if (password.length < 6 || password.length > 30){
-                        Toast.makeText(context, "Password must be greater than 6 and less than 30 characters.", Toast.LENGTH_SHORT).show()
-                    }
-                    // Email must be valid using regex.
-                    else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex())){
-                        Toast.makeText(context, "Please enter a valid email", Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        auth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
+                ) {
+                    Text("Sign in",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold)
+                }
+
+                OrDivider()
+
+                Button(
+                    onClick = {
+                        val clientId = context.getString(R.string.default_web_client_id)
+
+                        val googleIdOption = GetGoogleIdOption.Builder()
+                            // Your server's client ID, not your Android client ID.
+                            .setServerClientId(clientId)
+                            // Only show accounts previously used to sign in.
+                            .setFilterByAuthorizedAccounts(true)
+                            .build()
+
+                        val request = GetCredentialRequest.Builder()
+                            .addCredentialOption(googleIdOption)
+                            .build()
+                        SoundManager.play("click")
+                    },
+                    shape = RoundedCornerShape(25.dp),
+                    modifier = Modifier.fillMaxWidth()
+                        .heightIn(min = 56.dp),
+                    border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFFFFF),
+                    )
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_google),
+                        contentDescription = "Google Logo",
+                        modifier = Modifier.size(28.dp),
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text("Continue with Google",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                /*
+                GitHub sign in
+                 */
+                Button(
+                    onClick = {
+                        val provider = OAuthProvider.newBuilder("github.com")
+
+                        val pendingResultTask = auth.pendingAuthResult
+                        if (pendingResultTask != null) {
+                            // There's something already here! Finish the sign-in for your user.
+                            pendingResultTask
+                                .addOnSuccessListener {
+                                    // User is signed in.
+                                    // IdP data available in
+                                    // authResult.getAdditionalUserInfo().getProfile().
+                                    // The OAuth access token can also be retrieved:
+                                    // ((OAuthCredential)authResult.getCredential()).getAccessToken().
+                                    // The OAuth secret can be retrieved by calling:
+                                    // ((OAuthCredential)authResult.getCredential()).getSecret().
+                                    Log.d(TAG, "GitHub sign-in success:")
 
                                     nav.navigate("home") {
                                         popUpTo("intro") { inclusive = true }
                                     }
-                                } else {
-                                    val msg = task.exception?.localizedMessage ?: "Authentication failed."
-                                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                                 }
-                            }
+                                .addOnFailureListener { e ->
+                                    // Handle failure.
+                                    Toast.makeText(context, "Sign-in failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                                }
+                        } else {
+                            auth
+                                .startActivityForSignInWithProvider(activity, provider.build())
+                                .addOnSuccessListener { authResult ->
+                                    // User is signed in.
+                                    // IdP data available in
+                                    // authResult.getAdditionalUserInfo().getProfile().
+                                    // The OAuth access token can also be retrieved:
+                                    // ((OAuthCredential)authResult.getCredential()).getAccessToken().
+                                    // The OAuth secret can be retrieved by calling:
+                                    // ((OAuthCredential)authResult.getCredential()).getSecret().
+                                    Log.d(TAG, "GitHub sign-in success: ${authResult.user?.uid}")
+                                    nav.navigate("home") {
+                                        popUpTo("intro") { inclusive = true }
+                                    }
 
-                    }
+                                }
+                                .addOnFailureListener { e ->
+                                    // Handle failure.
+                                    Log.e(TAG, "GitHub sign-in failed (start flow)", e)
+                                    Toast.makeText(context, "Sign-in failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                    },
+                    shape = RoundedCornerShape(25.dp),
+                    modifier = Modifier.fillMaxWidth()
+                        .heightIn(min = 56.dp),
+                    border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFFFFF))
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_github2),
+                        contentDescription = "Google Logo",
+                        modifier = Modifier.size(34.dp),
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        "Continue with GitHub",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
-            ) {
-                Text("Sign in",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Button to go to the register account page
+                Text("Don't have an account? Register",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable {
+                        SoundManager.play("click")
+                        nav.navigate("register") })
+
             }
-
-            OrDivider()
-
-            Button(
-                onClick = {
-                    val clientId = context.getString(R.string.default_web_client_id)
-
-                    val googleIdOption = GetGoogleIdOption.Builder()
-                        // Your server's client ID, not your Android client ID.
-                        .setServerClientId(clientId)
-                        // Only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(true)
-                        .build()
-
-                    val request = GetCredentialRequest.Builder()
-                        .addCredentialOption(googleIdOption)
-                        .build()
-                },
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier.fillMaxWidth()
-                    .heightIn(min = 56.dp),
-                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFFFFFF),
-                )
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_google),
-                    contentDescription = "Google Logo",
-                    modifier = Modifier.size(28.dp),
-                )
-                Spacer(Modifier.width(8.dp))
-                Text("Continue with Google",
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            /*
-            GitHub sign in
-             */
-            Button(
-                onClick = {
-                    val provider = OAuthProvider.newBuilder("github.com")
-
-                    val pendingResultTask = auth.pendingAuthResult
-                    if (pendingResultTask != null) {
-                        // There's something already here! Finish the sign-in for your user.
-                        pendingResultTask
-                            .addOnSuccessListener {
-                                // User is signed in.
-                                // IdP data available in
-                                // authResult.getAdditionalUserInfo().getProfile().
-                                // The OAuth access token can also be retrieved:
-                                // ((OAuthCredential)authResult.getCredential()).getAccessToken().
-                                // The OAuth secret can be retrieved by calling:
-                                // ((OAuthCredential)authResult.getCredential()).getSecret().
-                                Log.d(TAG, "GitHub sign-in success:")
-
-                                nav.navigate("home") {
-                                    popUpTo("intro") { inclusive = true }
-                                }
-                            }
-                            .addOnFailureListener { e ->
-                                // Handle failure.
-                                Toast.makeText(context, "Sign-in failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
-                            }
-                    } else {
-                        auth
-                            .startActivityForSignInWithProvider(activity, provider.build())
-                            .addOnSuccessListener { authResult ->
-                                // User is signed in.
-                                // IdP data available in
-                                // authResult.getAdditionalUserInfo().getProfile().
-                                // The OAuth access token can also be retrieved:
-                                // ((OAuthCredential)authResult.getCredential()).getAccessToken().
-                                // The OAuth secret can be retrieved by calling:
-                                // ((OAuthCredential)authResult.getCredential()).getSecret().
-                                Log.d(TAG, "GitHub sign-in success: ${authResult.user?.uid}")
-                                nav.navigate("home") {
-                                    popUpTo("intro") { inclusive = true }
-                                }
-
-                            }
-                            .addOnFailureListener { e ->
-                                // Handle failure.
-                                Log.e(TAG, "GitHub sign-in failed (start flow)", e)
-                                Toast.makeText(context, "Sign-in failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
-                            }
-                    }
-                },
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier.fillMaxWidth()
-                    .heightIn(min = 56.dp),
-                border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFFFFFF))
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_github2),
-                    contentDescription = "Google Logo",
-                    modifier = Modifier.size(34.dp),
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    "Continue with GitHub",
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Button to go to the register account page
-            Text("Don't have an account? Register",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable { nav.navigate("register") })
 
         }
 
     }
 
-}
 
 
-    
 }
 
 

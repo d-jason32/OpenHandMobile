@@ -1,5 +1,7 @@
 package com.example.openhandmobile
 
+import android.media.AudioAttributes
+import android.media.SoundPool
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -22,14 +24,21 @@ import com.google.firebase.auth.auth
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.compose.runtime.SideEffect
+import com.example.openhandmobile.onboarding.Onboarding1
+import com.example.openhandmobile.onboarding.Onboarding2
+import com.example.openhandmobile.onboarding.Onboarding2_5
+import com.example.openhandmobile.onboarding.Onboarding3
+import com.example.openhandmobile.onboarding.Onboarding4
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        SoundManager.init(this)
 
 
         auth = Firebase.auth
@@ -85,15 +94,15 @@ fun MyApp(
         NavHost(
             navController = nav,
             // app will start at the introduction screen
-            startDestination = "home"
-            //startDestination = "intro"
+            //startDestination = "home"
+            startDestination = "intro"
         ) {
             composable("intro") {
 
                 IntroductionScreen(
                     onContinueClicked = {
                         // SET THIS TO REGISTER!
-                        nav.navigate("register") {
+                        nav.navigate("onboarding1") {
                             popUpTo("intro") { inclusive = true }
                         }
                     },
@@ -106,7 +115,7 @@ fun MyApp(
 
 
 
-                )
+                    )
             }
             // Route for the login screen
             composable("login") { Login(nav) }
@@ -116,9 +125,6 @@ fun MyApp(
 
             // Route for the home page
             composable("home") { Home(nav) }
-
-            // Route for the home page
-            composable("cameraTest") { CameraTest(nav) }
 
             composable("classes") { Classes(nav) }
 
@@ -133,6 +139,17 @@ fun MyApp(
             composable("friends") { FriendsScreen(nav) }
 
             composable("modeltest") { ModelTest(nav) }
+
+            composable("onboarding1") { Onboarding1(nav) }
+
+            composable("onboarding2") { Onboarding2(nav) }
+
+            composable("onboarding3") { Onboarding3(nav) }
+
+            composable("onboarding4") { Onboarding4(nav) }
+
+            composable("onboarding2_5") { Onboarding2_5(nav) }
+
 
 
 

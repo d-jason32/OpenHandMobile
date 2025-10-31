@@ -169,7 +169,7 @@ fun RegisterScreen(nav: NavHostController) {
                         )
                     }
 
-                    )
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -279,6 +279,7 @@ fun RegisterScreen(nav: NavHostController) {
                     color = Color.White,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable {
+                        SoundManager.play("click")
                         nav.navigate("login")
                     })
 
