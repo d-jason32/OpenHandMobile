@@ -204,7 +204,7 @@ fun gifK() {
                 .build()
         ),
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        //contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
@@ -294,7 +294,7 @@ fun gifP() {
                 .build()
         ),
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        //contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
@@ -312,7 +312,7 @@ fun gifQ() {
                 .build()
         ),
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        //contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)

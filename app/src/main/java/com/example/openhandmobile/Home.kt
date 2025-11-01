@@ -145,7 +145,7 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
             )
             {
                 OutlinedButton(
-                    onClick = { nav.navigate("classW") },
+                    onClick = { nav.navigate("classZ") },
                     modifier = Modifier.fillMaxWidth()
                         .padding(horizontal = 20.dp),
                     border = BorderStroke(2.dp, Color(0xFF00A6FF)),

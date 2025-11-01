@@ -1392,7 +1392,7 @@ fun classQ(nav: NavHostController, modifier: Modifier = Modifier) {
 
                 )
 
-                gifO()
+                gifQ()
 
 
             }
