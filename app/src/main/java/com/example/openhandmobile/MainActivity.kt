@@ -24,6 +24,7 @@ import com.google.firebase.auth.auth
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.compose.runtime.SideEffect
+import com.example.openhandmobile.classes.classB
 import com.example.openhandmobile.onboarding.Onboarding1
 import com.example.openhandmobile.onboarding.Onboarding2
 import com.example.openhandmobile.onboarding.Onboarding2_5
@@ -150,6 +151,7 @@ fun MyApp(
 
             composable("onboarding2_5") { Onboarding2_5(nav) }
 
+            composable("classB") { classB(nav) }
 
 
 
