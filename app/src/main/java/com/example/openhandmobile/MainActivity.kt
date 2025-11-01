@@ -24,7 +24,33 @@ import com.google.firebase.auth.auth
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.compose.runtime.SideEffect
+import com.example.openhandmobile.classes.classA
 import com.example.openhandmobile.classes.classB
+import com.example.openhandmobile.classes.classC
+import com.example.openhandmobile.classes.classD
+import com.example.openhandmobile.classes.classE
+import com.example.openhandmobile.classes.classF
+import com.example.openhandmobile.classes.classG
+import com.example.openhandmobile.classes.classH
+import com.example.openhandmobile.classes.classI
+import com.example.openhandmobile.classes.classJ
+import com.example.openhandmobile.classes.classK
+import com.example.openhandmobile.classes.classL
+import com.example.openhandmobile.classes.classM
+import com.example.openhandmobile.classes.classN
+import com.example.openhandmobile.classes.classO
+import com.example.openhandmobile.classes.classP
+import com.example.openhandmobile.classes.classQ
+import com.example.openhandmobile.classes.classR
+import com.example.openhandmobile.classes.classS
+import com.example.openhandmobile.classes.classT
+import com.example.openhandmobile.classes.classU
+import com.example.openhandmobile.classes.classV
+import com.example.openhandmobile.classes.classW
+import com.example.openhandmobile.classes.classX
+import com.example.openhandmobile.classes.classY
+import com.example.openhandmobile.classes.classZ
+
 import com.example.openhandmobile.onboarding.Onboarding1
 import com.example.openhandmobile.onboarding.Onboarding2
 import com.example.openhandmobile.onboarding.Onboarding2_5
@@ -151,7 +177,32 @@ fun MyApp(
 
             composable("onboarding2_5") { Onboarding2_5(nav) }
 
+            composable("classA") { classA(nav) }
             composable("classB") { classB(nav) }
+            composable("classC") { classC(nav) }
+            composable("classD") { classD(nav) }
+            composable("classE") { classE(nav) }
+            composable("classF") { classF(nav) }
+            composable("classG") { classG(nav) }
+            composable("classH") { classH(nav) }
+            composable("classI") { classI(nav) }
+            composable("classJ") { classJ(nav) }
+            composable("classK") { classK(nav) }
+            composable("classL") { classL(nav) }
+            composable("classM") { classM(nav) }
+            composable("classN") { classN(nav) }
+            composable("classO") { classO(nav) }
+            composable("classP") { classP(nav) }
+            composable("classQ") { classQ(nav) }
+            composable("classR") { classR(nav) }
+            composable("classS") { classS(nav) }
+            composable("classT") { classT(nav) }
+            composable("classU") { classU(nav) }
+            composable("classV") { classV(nav) }
+            composable("classW") { classW(nav) }
+            composable("classX") { classX(nav) }
+            composable("classY") { classY(nav) }
+            composable("classZ") { classZ(nav) }
 
 
 
