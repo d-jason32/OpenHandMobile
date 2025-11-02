@@ -2162,3 +2162,825 @@ fun classZ(nav: NavHostController, modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Composable
+fun class0(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 0!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif0()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun class1(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 1!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif1()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class2(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 2!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif2()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class3(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 3!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif3()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class4(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 4!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif4()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class5(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 5!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif5()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class6(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 6!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif6()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class7(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 7!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif7()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class8(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 8!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif8()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun class9(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    Scaffold(
+        containerColor = Color(0xFF1A1A1A),
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavBar(nav) },
+
+
+        ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(22.dp)
+        ) {
+
+            Squares(
+                modifier = Modifier.matchParentSize()
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(22.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Image(
+                    painter = painterResource(id = R.drawable.handy_smart_crop_fix),
+                    contentDescription = "Handy",
+                    modifier = Modifier
+                        .size(150.dp)
+
+                )
+
+                Text(
+                    text = "Practice Number 9!",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 36.sp
+                    ),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+
+                )
+
+                gif9()
+
+
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                OutlinedButton(
+                    onClick = { nav.navigate("home") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Test your sign!",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+    }
+}

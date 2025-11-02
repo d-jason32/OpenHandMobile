@@ -123,7 +123,7 @@ fun Classes(nav: NavHostController, modifier: Modifier = Modifier) {
                 LessonBox(
                     title = lesson,
                     onClick = {
-
+                        nav.navigate("class$lesson")
                     }
                 )
             }

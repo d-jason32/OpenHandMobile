@@ -24,6 +24,16 @@ import com.google.firebase.auth.auth
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.compose.runtime.SideEffect
+import com.example.openhandmobile.classes.class0
+import com.example.openhandmobile.classes.class1
+import com.example.openhandmobile.classes.class2
+import com.example.openhandmobile.classes.class3
+import com.example.openhandmobile.classes.class4
+import com.example.openhandmobile.classes.class5
+import com.example.openhandmobile.classes.class6
+import com.example.openhandmobile.classes.class7
+import com.example.openhandmobile.classes.class8
+import com.example.openhandmobile.classes.class9
 import com.example.openhandmobile.classes.classA
 import com.example.openhandmobile.classes.classB
 import com.example.openhandmobile.classes.classC
@@ -203,6 +213,16 @@ fun MyApp(
             composable("classX") { classX(nav) }
             composable("classY") { classY(nav) }
             composable("classZ") { classZ(nav) }
+            composable("class0") { class0(nav) }
+            composable("class1") { class1(nav) }
+            composable("class2") { class2(nav) }
+            composable("class3") { class3(nav) }
+            composable("class4") { class4(nav) }
+            composable("class5") { class5(nav) }
+            composable("class6") { class6(nav) }
+            composable("class7") { class7(nav) }
+            composable("class8") { class8(nav) }
+            composable("class9") { class9(nav) }
 
 
 
