@@ -113,11 +113,10 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
         }
     }
 }
-
-
 @Composable
 fun CameraStreamScreen(
-    serverUrl: String = "ws://10.0.2.2:8000/ws" // emulator→host. If physical+adb reverse: ws://127.0.0.1:8000/ws
+    serverUrl: String = "ws://10.0.2.2:8000/ws",
+    onPrediction: ((String, Float) -> Unit)? = null
 ) {
     val ctx = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -131,6 +130,7 @@ fun CameraStreamScreen(
         InferenceWs(serverUrl) { l, p ->
             label = l
             prob = p
+            onPrediction?.invoke(l, p)
         }.also { it.connect() }
     }
     DisposableEffect(Unit) {

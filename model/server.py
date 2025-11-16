@@ -6,9 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.websockets import WebSocketDisconnect
 import pickle
 
-# =========================
-# ---- CONFIG / CONSTANTS
-# =========================
 MODEL_PATH = os.environ.get("MODEL_PATH", "model_rf_336.p")
 
 LETTER_SET = set(list("ABCDEFGHIKLMNOPQRSTUVWXY") + ["J", "Z"])
@@ -21,9 +18,6 @@ SEQ_WINDOW = 30
 MIN_SEQ_FOR_PRED = 8
 
 
-# =========================
-# ---- HELPERS
-# =========================
 def get_allowed_names(mode: str):
     m = (mode or "auto").lower()
     if m == "letters": return LETTER_SET

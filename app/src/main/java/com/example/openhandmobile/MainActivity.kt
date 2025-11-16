@@ -60,6 +60,7 @@ import com.example.openhandmobile.classes.classW
 import com.example.openhandmobile.classes.classX
 import com.example.openhandmobile.classes.classY
 import com.example.openhandmobile.classes.classZ
+import com.example.openhandmobile.grading.GradingScreen
 
 import com.example.openhandmobile.onboarding.Onboarding1
 import com.example.openhandmobile.onboarding.Onboarding2
@@ -133,6 +134,7 @@ fun MyApp(
             // app will start at the introduction screen
             startDestination = "home"
             //startDestination = "intro"
+            //startDestination = "CongratulationsScreen"
         ) {
             composable("intro") {
 
@@ -223,6 +225,13 @@ fun MyApp(
             composable("class7") { class7(nav) }
             composable("class8") { class8(nav) }
             composable("class9") { class9(nav) }
+            composable("CongratulationsScreen") { CongratulationsScreen(nav) }
+            composable("grading/{id}") { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id") ?: ""
+                GradingScreen(nav = nav, id = id)
+            }
+
+
 
 
 
