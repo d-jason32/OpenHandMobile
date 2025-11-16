@@ -14,7 +14,6 @@ class InferenceWs(
     private val url: String,
     private val onTop: (label: String, prob: Float) -> Unit
 ) {
-    // Keep the WS alive with pings; helpful on emulator/device networks
     private val client = OkHttpClient.Builder()
         .pingInterval(15, TimeUnit.SECONDS)
         .build()
@@ -43,7 +42,6 @@ class InferenceWs(
                         return
                     }
 
-                    // Status + errors (surface to UI so you know what's happening)
                     when {
                         obj["status"] == "nohands" -> {
                             onTop("No hands", 0f); return
@@ -55,7 +53,6 @@ class InferenceWs(
                             onTop("ERR: ${(obj["error"] as String).take(40)}", 0f); return
                         }
                         else -> {
-                            // Unknown message type; ignore silently
                         }
                     }
                 } catch (_: Exception) {
@@ -78,7 +75,6 @@ class InferenceWs(
     }
 
     fun sendJpegBase64(b64: String) {
-        // Server accepts raw base64 (and we made it accept data URLs too)
         ws?.send("""{"type":"frame","jpeg_b64":"$b64"}""")
     }
 

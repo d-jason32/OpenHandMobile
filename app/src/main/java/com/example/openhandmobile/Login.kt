@@ -76,6 +76,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.OAuthProvider
 import kotlinx.coroutines.tasks.await
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+
 
 
 
@@ -90,6 +96,37 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
     val auth = Firebase.auth
     val activity = context as Activity
     val scope = rememberCoroutineScope()
+
+    val googleLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val token = account.idToken
+            if (token != null) {
+                val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
+                auth.signInWithCredential(firebaseCredential)
+                    .addOnCompleteListener { task2 ->
+                        if (task2.isSuccessful) {
+                            Log.d(TAG, "Fallback GoogleSignIn success: ${auth.currentUser?.uid}")
+                            nav.navigate("home") {
+                                popUpTo("intro") { inclusive = true }
+                            }
+                        } else {
+                            val msg = task2.exception?.localizedMessage ?: "Authentication failed."
+                            Log.e(TAG, "Firebase auth (fallback) failed", task2.exception)
+                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(context, "No ID token from Google account.", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Fallback GoogleSignIn error", e)
+            Toast.makeText(context, e.localizedMessage ?: "Google sign-in failed.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     @Composable
     fun OrDivider() {
@@ -294,16 +331,69 @@ fun Login(nav: NavHostController, modifier: Modifier = Modifier) {
                         val clientId = context.getString(R.string.default_web_client_id)
 
                         val googleIdOption = GetGoogleIdOption.Builder()
-                            // Your server's client ID, not your Android client ID.
                             .setServerClientId(clientId)
-                            // Only show accounts previously used to sign in.
-                            .setFilterByAuthorizedAccounts(true)
+                            .setFilterByAuthorizedAccounts(false)
                             .build()
 
                         val request = GetCredentialRequest.Builder()
                             .addCredentialOption(googleIdOption)
                             .build()
+
                         SoundManager.play("click")
+
+                        scope.launch {
+                            try {
+                                val credentialManager = CredentialManager.create(context)
+                                val result = credentialManager.getCredential(
+                                    request = request,
+                                    context = activity
+                                )
+
+                                when (val cred = result.credential) {
+                                    is CustomCredential -> {
+                                        if (cred.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                                            val googleCred = GoogleIdTokenCredential.createFrom(cred.data)
+                                            val idToken = googleCred.idToken
+                                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                                            auth.signInWithCredential(firebaseCredential)
+                                                .addOnCompleteListener { task ->
+                                                    if (task.isSuccessful) {
+                                                        Log.d(TAG, "Google sign-in success: ${auth.currentUser?.uid}")
+                                                        nav.navigate("home") {
+                                                            popUpTo("intro") { inclusive = true }
+                                                        }
+                                                    } else {
+                                                        val msg = task.exception?.localizedMessage ?: "Authentication failed."
+                                                        Log.e(TAG, "Firebase auth with Google failed", task.exception)
+                                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }
+                                        } else {
+                                            Log.e(TAG, "Unexpected credential type: ${cred.type}")
+                                            Toast.makeText(context, "Unsupported credential type", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    else -> {
+                                        Log.w(TAG, "No GoogleCredential from CredentialManager. Falling back to GoogleSignInClient.")
+                                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                            .requestIdToken(clientId)
+                                            .requestEmail()
+                                            .build()
+                                        val signInClient = GoogleSignIn.getClient(context, gso)
+                                        googleLauncher.launch(signInClient.signInIntent)
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                Log.w(TAG, "Credential Manager flow failed, trying GoogleSignIn fallback", e)
+                                Toast.makeText(context, "Trying Google account picker…", Toast.LENGTH_SHORT).show()
+                                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                    .requestIdToken(clientId)
+                                    .requestEmail()
+                                    .build()
+                                val signInClient = GoogleSignIn.getClient(context, gso)
+                                googleLauncher.launch(signInClient.signInIntent)
+                            }
+                        }
                     },
                     shape = RoundedCornerShape(25.dp),
                     modifier = Modifier.fillMaxWidth()

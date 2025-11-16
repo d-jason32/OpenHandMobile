@@ -58,6 +58,28 @@ import com.example.squares.Squares
 fun Classes(nav: NavHostController, modifier: Modifier = Modifier) {
     val letters = ('A'..'Z').map { "$it" }
     val numbers = ('0'..'9').map { "$it" }
+    val phrases = listOf(
+        "MILK",
+        "MORE",
+        "ALL DONE",
+        "EAT",
+        "DRINK",
+        "SLEEP",
+        "DIAPER",
+        "BATH",
+        "MOM",
+        "DAD",
+        "PLEASE",
+        "THANK YOU",
+        "HELP",
+        "LOVE YOU",
+        "SORRY",
+        "PLAY",
+        "BOOK",
+        "BALL",
+        "DOG",
+        "MUSIC"
+    )
 
 
     Scaffold(
@@ -128,6 +150,29 @@ fun Classes(nav: NavHostController, modifier: Modifier = Modifier) {
                 )
             }
 
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Text(
+                    text = "Phrases",
+                    color = Color.White,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 50.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = Raleway,
+
+                    )
+            }
+            items(phrases) { phrase ->
+                LessonBox(
+                    title = phrase,
+                    onClick = {
+                        nav.navigate("phrase_${phrase.replace(" ", "_").lowercase()}")
+                    }
+                )
+            }
+
         }
 
     }
@@ -146,11 +191,25 @@ fun LessonBox(title: String, onClick: () -> Unit) {
             .height(200.dp),
         contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = getLessonImage(title)),
-            contentDescription = null,
-            modifier = Modifier.size(120.dp),
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = getLessonImage(title)),
+                contentDescription = null,
+                modifier = Modifier.size(120.dp)
+            )
+            Text(
+                text = title,
+                color = Color.White,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = Raleway,
+                modifier = Modifier.padding(top = 8.dp),
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
@@ -182,6 +241,17 @@ fun getLessonImage(letter: String): Int {
         "X" -> R.drawable.dx
         "Y" -> R.drawable.dy
         "Z" -> R.drawable.dz
+        "0" -> R.drawable.d0
+        "1" -> R.drawable.d1
+        "2" -> R.drawable.d2
+        "3" -> R.drawable.d3
+        "4" -> R.drawable.d4
+        "5" -> R.drawable.d5
+        "6" -> R.drawable.d6
+        "7" -> R.drawable.d7
+        "8" -> R.drawable.d8
+        "9" -> R.drawable.d9
+
         else -> R.drawable.da
     }
 }
