@@ -58,6 +58,7 @@ import java.util.concurrent.Executors
 import com.example.openhandmobile.InferenceWs
 import com.example.openhandmobile.FrameSender
 import android.util.Size
+import androidx.camera.core.AspectRatio
 
 
 @Composable
@@ -156,7 +157,7 @@ fun CameraStreamScreen(
         }
 
         val analyzer = ImageAnalysis.Builder()
-            .setTargetResolution(Size(640, 480))
+            .setTargetAspectRatio(AspectRatio.RATIO_4_3)
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build().also {
                 it.setAnalyzer(cameraExecutor, FrameSender(ws) { ctx })

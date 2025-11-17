@@ -36,7 +36,7 @@ fun ImageProxy.toBitmap(
     return bmp
 }
 
-private fun yuv420888ToNv21(image: ImageProxy): ByteArray {
+public fun yuv420888ToNv21(image: ImageProxy): ByteArray {
     val yPlane = image.planes[0]
     val uPlane = image.planes[1]
     val vPlane = image.planes[2]
