@@ -31,7 +31,7 @@ class FrameSender(
                 bmp, (bmp.width * scale).toInt(), (bmp.height * scale).toInt(), true
             )
             val baos = ByteArrayOutputStream()
-            scaled.compress(Bitmap.CompressFormat.JPEG, 70, baos)
+            scaled.compress(Bitmap.CompressFormat.JPEG, 40, baos)
             val b64 = Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP)
             ws.sendJpegBase64(b64)
             lastSent = now

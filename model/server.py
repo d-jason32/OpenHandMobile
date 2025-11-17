@@ -149,9 +149,9 @@ async def ws_infer(ws: WebSocket):
     try:
         while True:
             text = await ws.receive_text()
-            print("WS: recv text len:", len(text))
+            #print("WS: recv text len:", len(text))
             data = json.loads(text)
-            print("WS: type =", data.get("type"))
+            #print("WS: type =", data.get("type"))
 
             if data.get("type") == "set_mode":
                 mode = data.get("mode", "letters")
@@ -176,13 +176,13 @@ async def ws_infer(ws: WebSocket):
                 continue
 
             img = cv2.imdecode(np.frombuffer(jpg_bytes, np.uint8), cv2.IMREAD_COLOR)
-            print("frame:", "ok" if img is not None else "none", img.shape if img is not None else None)
+            #print("frame:", "ok" if img is not None else "none", img.shape if img is not None else None)
             if img is None:
                 await ws.send_text(json.dumps({"error": "decode_failed"}))
                 continue
 
             results = hands.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-            print("hands:", 0 if not getattr(results, "multi_hand_landmarks", None) else len(results.multi_hand_landmarks))
+            #print("hands:", 0 if not getattr(results, "multi_hand_landmarks", None) else len(results.multi_hand_landmarks))
 
             feat84, _ = feat84_from_results(results)
             pred_proba = None

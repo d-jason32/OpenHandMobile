@@ -57,6 +57,7 @@ import com.example.squares.Squares
 import java.util.concurrent.Executors
 import com.example.openhandmobile.InferenceWs
 import com.example.openhandmobile.FrameSender
+import android.util.Size
 
 
 @Composable
@@ -74,9 +75,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(paddingValues)
         ) {
-            Squares(
-                modifier = Modifier.matchParentSize()
-            )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -157,6 +156,7 @@ fun CameraStreamScreen(
         }
 
         val analyzer = ImageAnalysis.Builder()
+            .setTargetResolution(Size(640, 480))
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build().also {
                 it.setAnalyzer(cameraExecutor, FrameSender(ws) { ctx })
