@@ -29,10 +29,6 @@ object SoundManager {
         soundMap["skill"] = soundPool!!.load(context, R.raw.skill, 1)
         soundMap["practice"] = soundPool!!.load(context, R.raw.practice, 1)
         soundMap["questions"] = soundPool!!.load(context, R.raw.questions, 1)
-        soundMap["nice"] = soundPool!!.load(context, R.raw.nice, 1)
-        soundMap["level"] = soundPool!!.load(context, R.raw.level, 1)
-
-
 
 
 

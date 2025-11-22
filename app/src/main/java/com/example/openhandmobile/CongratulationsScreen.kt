@@ -39,10 +39,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
     LaunchedEffect(Unit) {
-        delay(500)
-        SoundManager.play("level")
-        delay(2000)
-        SoundManager.play("nice")
+        delay(1000)
+        SoundManager.play("hi")
     }
 
     Scaffold(
