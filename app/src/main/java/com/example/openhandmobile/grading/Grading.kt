@@ -43,6 +43,7 @@ fun GradingScreen(
         rawLabel.replace('_', ' ')
     }
 
+    // ✅ When prediction matches the expected label with high confidence, go to Congratulations
     LaunchedEffect(currentLabel, currentProb, hasNavigated, expectedLabel) {
         if (!hasNavigated && currentLabel == expectedLabel && currentProb >= 0.20f) {
             hasNavigated = true
