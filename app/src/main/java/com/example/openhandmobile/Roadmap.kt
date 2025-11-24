@@ -122,11 +122,11 @@ fun CarouselExample(modifier: Modifier = Modifier) {
         listOf(
             CarouselItem(0, R.drawable.handy_white_logo, "Letters - Easy", locked = false),
             CarouselItem(1, R.drawable.handy_closed_eyes, "Letters - Medium", locked = false),
-            CarouselItem(2, R.drawable.handy_smart_crop_fix, "Letters - Hard", locked = true),
+            CarouselItem(2, R.drawable.handy_smart_crop_fix, "Letters - Hard", locked = false),
             CarouselItem(3, R.drawable.handy_white_logo, "Letters and Numbers - Easy", locked = false),
             CarouselItem(4, R.drawable.handy_closed_eyes, "Letters and Numbers - Medium", locked = false),
-            CarouselItem(5, R.drawable.handy_smart_crop_fix, "Letters and Numbers - Hard", locked = true),
-            CarouselItem(6, R.drawable.handy_smart_crop_fix, "Common Words - Hard", locked = true),
+            CarouselItem(5, R.drawable.handy_smart_crop_fix, "Letters and Numbers - Hard", locked = false),
+            CarouselItem(6, R.drawable.handy_smart_crop_fix, "Common Words - Hard", locked = false),
         )
     }
 

@@ -44,6 +44,7 @@ fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier)
     }
 
     Scaffold(
+
         containerColor = Color(0xFF1A1A1A),
         modifier = Modifier.fillMaxSize(),
 
