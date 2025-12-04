@@ -168,7 +168,7 @@ fun Classes(nav: NavHostController, modifier: Modifier = Modifier) {
                 LessonBox(
                     title = phrase,
                     onClick = {
-                        nav.navigate("phrase_${phrase.replace(" ", "_").lowercase()}")
+                        nav.navigate(getPhraseRoute(phrase))
                     }
                 )
             }
@@ -253,5 +253,31 @@ fun getLessonImage(letter: String): Int {
         "9" -> R.drawable.d9
 
         else -> R.drawable.da
+    }
+}
+
+fun getPhraseRoute(phrase: String): String {
+    return when (phrase) {
+        "MILK" -> "classMilk"
+        "MORE" -> "classMore"
+        "ALL DONE" -> "classAllDone"
+        "EAT" -> "classEat"
+        "DRINK" -> "classDrink"
+        "SLEEP" -> "classSleep"
+        "DIAPER" -> "classDiaper"
+        "BATH" -> "classBath"
+        "MOM" -> "classMom"
+        "DAD" -> "classDad"
+        "PLEASE" -> "classPlease"
+        "THANK YOU" -> "classThankYou"
+        "HELP" -> "classHelp"
+        "LOVE YOU" -> "classLove"
+        "SORRY" -> "classSorry"
+        "PLAY" -> "classPlay"
+        "BOOK" -> "classBook"
+        "BALL" -> "classBall"
+        "DOG" -> "classDog"
+        "MUSIC" -> "classMusic"
+        else -> "classes"
     }
 }

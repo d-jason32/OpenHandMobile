@@ -13,6 +13,9 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.openhandmobile.R
 
+// MUSIC
+// book 
+// sorry
 @Composable
 fun gifA() {
     Image(
@@ -655,6 +658,370 @@ fun gif9() {
         ),
         contentDescription = null,
         //contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+// ----------------------------------------------------
+//  WORD GIFS
+// ----------------------------------------------------
+
+@Composable
+fun gifAllDone() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_all_done)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifBall() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_ball)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifBath() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_bath)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifBook() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_book)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        //contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifDad() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_dad)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifDiaper() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_diaper)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifDog() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_dog)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifDrink() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_drink)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifEat() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_eat)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifHelp() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_help)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifLove() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_love)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifMilk() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_milk)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifMom() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_mom)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifMore() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_more)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifMusic() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_music)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        //contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifPlay() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_play)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifPlease() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_please)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifSleep() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_sleep)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifSorry() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_sorry)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        //contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    )
+}
+
+@Composable
+fun gifThankYou() {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.gif_thank_you)
+                .decoderFactory(GifDecoder.Factory())
+                .size(Size.ORIGINAL)
+                .build()
+        ),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)

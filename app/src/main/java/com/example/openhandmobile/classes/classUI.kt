@@ -98,6 +98,22 @@ fun PracticeScreen(
                         fontSize = 16.sp
                     )
                 }
+                OutlinedButton(
+                    onClick = { nav.navigate("classes") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    )
+                ) {
+                    Text(
+                        "Go Back",
+                        color = Color(0xFF00A6FF),
+                        fontSize = 16.sp
+                    )
+                }
             }
         }
     }
@@ -219,63 +235,66 @@ fun PracticeScreen(
 @Composable fun class9(nav: NavHostController, modifier: Modifier = Modifier) =
     PracticeScreen(nav, modifier, "Practice Number 9!", { gif9() }, "number_9")
 
-/*
+// ----------------------------------------------------
+//  WORD CLASSES
+//  IDs: word_MILK, word_MORE, ...
+// ----------------------------------------------------
 @Composable fun classMilk(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "MILK", { gifMilk() }, "word_MILK")
+    PracticeScreen(nav, modifier, "Practice Word MILK!", { gifMilk() }, "word_MILK")
 
 @Composable fun classMore(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "MORE", { gifMore() }, "word_MORE")
+    PracticeScreen(nav, modifier, "Practice Word MORE!", { gifMore() }, "word_MORE")
 
 @Composable fun classAllDone(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "ALL DONE", { gifAllDone() }, "word_ALL_DONE")
+    PracticeScreen(nav, modifier, "Practice Word ALL DONE!", { gifAllDone() }, "word_ALL_DONE")
 
 @Composable fun classEat(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "EAT", { gifEat() }, "word_EAT")
+    PracticeScreen(nav, modifier, "Practice Word EAT!", { gifEat() }, "word_EAT")
 
 @Composable fun classDrink(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "DRINK", { gifDrink() }, "word_DRINK")
+    PracticeScreen(nav, modifier, "Practice Word DRINK!", { gifDrink() }, "word_DRINK")
 
 @Composable fun classSleep(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "SLEEP", { gifSleep() }, "word_SLEEP")
+    PracticeScreen(nav, modifier, "Practice Word SLEEP!", { gifSleep() }, "word_SLEEP")
 
 @Composable fun classDiaper(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "DIAPER", { gifDiaper() }, "word_DIAPER")
+    PracticeScreen(nav, modifier, "Practice Word DIAPER!", { gifDiaper() }, "word_DIAPER")
 
 @Composable fun classBath(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "BATH", { gifBath() }, "word_BATH")
+    PracticeScreen(nav, modifier, "Practice Word BATH!", { gifBath() }, "word_BATH")
 
 @Composable fun classMom(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "MOM", { gifMom() }, "word_MOM")
+    PracticeScreen(nav, modifier, "Practice Word MOM!", { gifMom() }, "word_MOM")
 
 @Composable fun classDad(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "DAD", { gifDad() }, "word_DAD")
+    PracticeScreen(nav, modifier, "Practice Word DAD!", { gifDad() }, "word_DAD")
 
 @Composable fun classPlease(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "PLEASE", { gifPlease() }, "word_PLEASE")
+    PracticeScreen(nav, modifier, "Practice Word PLEASE!", { gifPlease() }, "word_PLEASE")
 
 @Composable fun classThankYou(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "THANK YOU", { gifThankYou() }, "word_THANK_YOU")
+    PracticeScreen(nav, modifier, "Practice Word THANK YOU!", { gifThankYou() }, "word_THANK_YOU")
 
 @Composable fun classHelp(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "HELP", { gifHelp() }, "word_HELP")
+    PracticeScreen(nav, modifier, "Practice Word HELP!", { gifHelp() }, "word_HELP")
 
-@Composable fun classLoveYou(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "LOVE YOU", { gifLoveYou() }, "word_LOVE_YOU")
+@Composable fun classLove(nav: NavHostController, modifier: Modifier = Modifier) =
+    PracticeScreen(nav, modifier, "Practice Word LOVE!", { gifLove() }, "word_LOVE")
 
 @Composable fun classSorry(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "SORRY", { gifSorry() }, "word_SORRY")
+    PracticeScreen(nav, modifier, "Practice Word SORRY!", { gifSorry() }, "word_SORRY")
 
 @Composable fun classPlay(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "PLAY", { gifPlay() }, "word_PLAY")
+    PracticeScreen(nav, modifier, "Practice Word PLAY!", { gifPlay() }, "word_PLAY")
 
 @Composable fun classBook(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "BOOK", { gifBook() }, "word_BOOK")
+    PracticeScreen(nav, modifier, "Practice Word BOOK!", { gifBook() }, "word_BOOK")
 
 @Composable fun classBall(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "BALL", { gifBall() }, "word_BALL")
+    PracticeScreen(nav, modifier, "Practice Word BALL!", { gifBall() }, "word_BALL")
 
 @Composable fun classDog(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "DOG", { gifDog() }, "word_DOG")
+    PracticeScreen(nav, modifier, "Practice Word DOG!", { gifDog() }, "word_DOG")
 
 @Composable fun classMusic(nav: NavHostController, modifier: Modifier = Modifier) =
-    PracticeScreen(nav, modifier, "MUSIC", { gifMusic() }, "word_MUSIC") */
+    PracticeScreen(nav, modifier, "Practice Word MUSIC!", { gifMusic() }, "word_MUSIC")

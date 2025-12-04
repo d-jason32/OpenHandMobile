@@ -60,6 +60,26 @@ import com.example.openhandmobile.classes.classW
 import com.example.openhandmobile.classes.classX
 import com.example.openhandmobile.classes.classY
 import com.example.openhandmobile.classes.classZ
+import com.example.openhandmobile.classes.classAllDone
+import com.example.openhandmobile.classes.classBall
+import com.example.openhandmobile.classes.classBath
+import com.example.openhandmobile.classes.classBook
+import com.example.openhandmobile.classes.classDad
+import com.example.openhandmobile.classes.classDiaper
+import com.example.openhandmobile.classes.classDog
+import com.example.openhandmobile.classes.classDrink
+import com.example.openhandmobile.classes.classEat
+import com.example.openhandmobile.classes.classHelp
+import com.example.openhandmobile.classes.classLove
+import com.example.openhandmobile.classes.classMilk
+import com.example.openhandmobile.classes.classMom
+import com.example.openhandmobile.classes.classMore
+import com.example.openhandmobile.classes.classMusic
+import com.example.openhandmobile.classes.classPlay
+import com.example.openhandmobile.classes.classPlease
+import com.example.openhandmobile.classes.classSleep
+import com.example.openhandmobile.classes.classSorry
+import com.example.openhandmobile.classes.classThankYou
 import com.example.openhandmobile.grading.GradingScreen
 
 import com.example.openhandmobile.onboarding.Onboarding1
@@ -225,6 +245,26 @@ fun MyApp(
             composable("class7") { class7(nav) }
             composable("class8") { class8(nav) }
             composable("class9") { class9(nav) }
+            composable("classAllDone") { classAllDone(nav) }
+            composable("classBall") { classBall(nav) }
+            composable("classBath") { classBath(nav) }
+            composable("classBook") { classBook(nav) }
+            composable("classDad") { classDad(nav) }
+            composable("classDiaper") { classDiaper(nav) }
+            composable("classDog") { classDog(nav) }
+            composable("classDrink") { classDrink(nav) }
+            composable("classEat") { classEat(nav) }
+            composable("classHelp") { classHelp(nav) }
+            composable("classLove") { classLove(nav) }
+            composable("classMilk") { classMilk(nav) }
+            composable("classMom") { classMom(nav) }
+            composable("classMore") { classMore(nav) }
+            composable("classMusic") { classMusic(nav) }
+            composable("classPlay") { classPlay(nav) }
+            composable("classPlease") { classPlease(nav) }
+            composable("classSleep") { classSleep(nav) }
+            composable("classSorry") { classSorry(nav) }
+            composable("classThankYou") { classThankYou(nav) }
             composable("CongratulationsScreen") { CongratulationsScreen(nav) }
             composable("grading/{id}") { backStackEntry ->
                 val id = backStackEntry.arguments?.getString("id") ?: ""
