@@ -251,6 +251,26 @@ fun getLessonImage(letter: String): Int {
         "7" -> R.drawable.d7
         "8" -> R.drawable.d8
         "9" -> R.drawable.d9
+        "MILK" -> R.drawable.milk
+        "MORE" -> R.drawable.more
+        "ALL DONE" -> R.drawable.all_done
+        "EAT" -> R.drawable.eat
+        "DRINK" -> R.drawable.drink
+        "SLEEP" -> R.drawable.sleep
+        "DIAPER" -> R.drawable.diaper
+        "BATH" -> R.drawable.bath
+        "MOM" -> R.drawable.mom
+        "DAD" -> R.drawable.dad
+        "PLEASE" -> R.drawable.please
+        "THANK YOU" -> R.drawable.thank_you
+        "HELP" -> R.drawable.help
+        "LOVE YOU" -> R.drawable.love_you
+        "SORRY" -> R.drawable.sorry
+        "PLAY" -> R.drawable.play
+        "BOOK" -> R.drawable.book
+        "BALL" -> R.drawable.ball
+        "DOG" -> R.drawable.dog
+        "MUSIC" -> R.drawable.music
 
         else -> R.drawable.da
     }

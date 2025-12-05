@@ -787,7 +787,7 @@ fun gifDog() {
                 .build()
         ),
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        //contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
