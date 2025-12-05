@@ -21,10 +21,6 @@ import com.example.openhandmobile.BottomNavBar
 import com.example.openhandmobile.R
 import com.example.squares.Squares
 
-// ----------------------------------------------------
-//  UNIVERSAL PRACTICE SCREEN (ALL CLASSES USE THIS)
-//  gradingId is like: "letter_A", "number_1", "word_MILK"
-// ----------------------------------------------------
 @Composable
 fun PracticeScreen(
     nav: NavHostController,
