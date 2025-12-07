@@ -15,3 +15,6 @@
 local.properties
 app/google-services.json
 app/src/main/res/values/strings.xml
+model/model_rf_336.p
+model/model_rf_336_meta.p
+OpenHandWebApp/

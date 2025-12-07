@@ -84,12 +84,13 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
             )
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Top,
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                Spacer(Modifier.height(24.dp))
+                //Spacer(Modifier.height(24.dp))
 
                 Image(
                     painter = painterResource(id = R.drawable.hi_transparent_copy),
@@ -145,7 +146,7 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
             )
             {
                 OutlinedButton(
-                    onClick = { nav.navigate("classZ") },
+                    onClick = { nav.navigate("modeltest") },
                     modifier = Modifier.fillMaxWidth()
                         .padding(horizontal = 20.dp),
                     border = BorderStroke(2.dp, Color(0xFF00A6FF)),
@@ -154,25 +155,8 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
                         contentColor = Color(0xFF00A6FF)
                     )
                 ) {
-                    Text("Continue lesson",
+                    Text("Test the Model",
                         fontSize = 16.sp)
-                }
-
-                OutlinedButton(
-                    onClick = { nav.navigate("modeltest") },
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 20.dp),
-                    border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent
-                    )
-
-                ) {
-                    Text(
-                        "Try the model",
-                        color = Color(0xFFFFFFFF),
-                            fontSize = 16.sp)
-
                 }
 
                 Spacer(Modifier.height(10.dp))

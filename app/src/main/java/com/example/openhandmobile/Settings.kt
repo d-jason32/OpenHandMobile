@@ -49,6 +49,8 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import com.google.firebase.auth.auth
+import com.google.firebase.Firebase
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -121,7 +123,12 @@ fun Settings(nav: NavHostController, modifier: Modifier = Modifier) {
                 Spacer(Modifier.height(10.dp))
 
                 OutlinedButton(
-                    onClick = {  },
+                    onClick = {
+                        com.google.firebase.Firebase.auth.signOut()
+                        nav.navigate("intro") {
+                            popUpTo(nav.graph.id) { inclusive = true }
+                        }
+                    },
                     border = BorderStroke(2.dp, Color.White),
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
