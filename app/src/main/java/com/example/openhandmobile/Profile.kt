@@ -44,6 +44,7 @@ import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,10 +64,21 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 
 @Composable
 fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    // Pull username from Firebase Auth (fallback to email prefix or "User")
+    var username by remember { mutableStateOf("User") }
+    val currentUser = Firebase.auth.currentUser
+    LaunchedEffect(currentUser?.uid) {
+        username = currentUser?.displayName
+            ?: currentUser?.email?.substringBefore("@")
+            ?: "User"
+    }
 
     Scaffold(
         containerColor = Color(0xFF1A1A1A),
@@ -96,7 +108,7 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
 
                 ProfilePage(
                     nav = nav,
-                    username = "your_username",
+                    username = username,
                     level = 10,
                     xp = 20000,
                     xpTarget = 50000,

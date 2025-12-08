@@ -2,6 +2,7 @@ package com.example.openhandmobile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,9 +50,8 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import com.google.firebase.auth.auth
-import com.google.firebase.Firebase
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,6 +60,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -72,6 +74,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
+import com.google.firebase.Firebase
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.auth
 
 @Composable
 fun Settings(nav: NavHostController, modifier: Modifier = Modifier) {
@@ -106,17 +112,8 @@ fun Settings(nav: NavHostController, modifier: Modifier = Modifier) {
 
                 Spacer(Modifier.height(10.dp))
 
-                PrivacyPanel()
 
-                Spacer(Modifier.height(10.dp))
 
-                PreferencesPanel()
-
-                Spacer(Modifier.height(10.dp))
-
-                NotificationsPanel()
-
-                Spacer(Modifier.height(10.dp))
 
                 SupportPanel()
 
@@ -152,226 +149,6 @@ fun Settings(nav: NavHostController, modifier: Modifier = Modifier) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PreferencesPanel(
-    modifier: Modifier = Modifier,
-) {
-    var front by rememberSaveable { mutableStateOf(true) }
-    var fingerOutlines by rememberSaveable { mutableStateOf(true) }
-    var matchPercent by rememberSaveable { mutableStateOf(true) }
-    var otherLesson by rememberSaveable { mutableStateOf(true) }
-
-    val appearanceOptions = listOf("System", "Dark Mode", "Light Mode")
-    var appearance by rememberSaveable { mutableStateOf("Dark Mode") }
-    var appearanceExpanded by remember { mutableStateOf(false) }
-
-    val accent = Color(0xFF00A6FF)
-
-    Card(
-        modifier = modifier
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Preferences",
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            ToggleRow(
-                title = "Front Camera by Default",
-                checked = front,
-                onCheckedChange = { front = it },
-                accent = accent
-            )
-
-            ToggleRow(
-                title = "Show Finger Outline",
-                checked = fingerOutlines,
-                onCheckedChange = { fingerOutlines = it },
-                accent = accent
-            )
-            ToggleRow(
-                title = "Show Match Percentage",
-                checked = matchPercent,
-                onCheckedChange = { matchPercent = it },
-                accent = accent
-            )
-            ToggleRow(
-                title = "Model Diagnostics",
-                checked = otherLesson,
-                onCheckedChange = { otherLesson = it },
-                accent = accent
-            )
-
-
-
-            Spacer(Modifier.height(16.dp))
-            Text(
-                text = "Appearance",
-                style = MaterialTheme.typography.labelLarge.copy(color = Color.White.copy(alpha = 0.6f))
-            )
-            Spacer(Modifier.height(8.dp))
-
-            ExposedDropdownMenuBox(
-                expanded = appearanceExpanded,
-                onExpandedChange = { appearanceExpanded = !appearanceExpanded }
-            ) {
-                TextField(
-                    value = appearance,
-                    onValueChange = {},
-                    readOnly = true,
-                    singleLine = true,
-                    modifier = Modifier
-                        .menuAnchor()
-                        .fillMaxWidth(),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.White.copy(alpha = 0.35f),
-                        unfocusedIndicatorColor = Color.White.copy(alpha = 0.2f),
-                        cursorColor = Color.White,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedTrailingIconColor = Color.White,
-                        unfocusedTrailingIconColor = Color.White
-                    ),
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = appearanceExpanded) },
-                    placeholder = {
-                        Text("Choose theme", color = Color.White.copy(alpha = 0.6f), maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    }
-                )
-                ExposedDropdownMenu(
-                    expanded = appearanceExpanded,
-                    onDismissRequest = { appearanceExpanded = false }
-                ) {
-                    appearanceOptions.forEach { option ->
-                        DropdownMenuItem(
-                            text = { Text(option) },
-                            onClick = {
-                                appearance = option
-                                appearanceExpanded = false
-                            }
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ToggleRow(
-    title: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    accent: Color
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            color = Color.White,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f)
-        )
-        Switch(
-            checked = checked,
-            onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.White,
-                checkedTrackColor = accent,
-                uncheckedThumbColor = Color.White.copy(alpha = 0.9f),
-                uncheckedTrackColor = Color.White.copy(alpha = 0.2f)
-            )
-        )
-    }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun NotificationsPanel(
-    modifier: Modifier = Modifier,
-) {
-    var push by rememberSaveable { mutableStateOf(true) }
-    var weekly by rememberSaveable { mutableStateOf(true) }
-    var daily by rememberSaveable { mutableStateOf(true) }
-    var friend by rememberSaveable { mutableStateOf(true) }
-    var product by rememberSaveable { mutableStateOf(true) }
-
-    val accent = Color(0xFF00A6FF)
-
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Notifications",
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            ToggleRow(
-                title = "Push Notifications",
-                checked = push,
-                onCheckedChange = { push = it },
-                accent = accent
-            )
-
-            ToggleRow(
-                title = "Weekly Progress",
-                checked = weekly,
-                onCheckedChange = { weekly = it },
-                accent = accent
-            )
-            ToggleRow(
-                title = "Daily Practice Reminder",
-                checked = daily,
-                onCheckedChange = { daily = it },
-                accent = accent
-            )
-            ToggleRow(
-                title = "Friend Activity",
-                checked = friend,
-                onCheckedChange = { friend = it },
-                accent = accent
-            )
-            ToggleRow(
-                title = "Product Updates",
-                checked = product,
-                onCheckedChange = { product = it },
-                accent = accent
-            )
-
-
-        }
-    }
-}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -379,6 +156,9 @@ fun NotificationsPanel(
 fun SupportPanel(
     modifier: Modifier = Modifier,
 ) {
+
+    val uriHandler = LocalUriHandler.current
+
 
 
     Card(
@@ -400,40 +180,17 @@ fun SupportPanel(
             )
 
             Spacer(Modifier.height(12.dp))
-            OutlinedButton(
-                onClick = {  },
-                border = BorderStroke(1.dp, Color(0xFF00A6FF)),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Open FAQ",
-                    color = Color(0xFF00A6FF),
-                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium)
-                )
-            }
 
             OutlinedButton(
-                onClick = { /*  */ },
-                border = BorderStroke(1.dp, Color(0xFF00FF7F)),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Contact Support",
-                    color = Color(0xFF00FF7F),
-                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium)
-                )
-            }
-
-            OutlinedButton(
-                onClick = {  },
+                onClick = {
+                    uriHandler.openUri("https://github.com/SandalCodez/OpenHand")
+                },
                 border = BorderStroke(1.dp, Color.Red),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Report a Bug",
+                    text = "Visit Github",
                     color = Color.Red,
                     style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium)
                 )
@@ -449,11 +206,17 @@ fun ProfilePanel(
     modifier: Modifier = Modifier
 ) {
     val outline = Color(0xFFD1D3D5)
-    var firstName by rememberSaveable { mutableStateOf("") }
-    var lastName by rememberSaveable { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     var currentPass by rememberSaveable { mutableStateOf("") }
     var newPass by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
+    val auth = Firebase.auth
+    val currentUser = auth.currentUser
+    LaunchedEffect(currentUser?.uid) {
+        username = currentUser?.displayName ?: currentUser?.email?.substringBefore("@") ?: ""
+        email = currentUser?.email ?: ""
+    }
 
     Card(
         modifier = modifier
@@ -478,8 +241,7 @@ fun ProfilePanel(
 
             Spacer(Modifier.height(12.dp))
 
-            ProfileField(label = "First Name", text = firstName, onTextChange = { firstName = it }, outline)
-            ProfileField(label = "Last Name", text = lastName, onTextChange = { lastName = it }, outline)
+            ProfileField(label = "Username", text = username, onTextChange = { username = it }, outline)
             ProfileField(label = "Email", text = email, onTextChange = { email = it }, outline)
 
             Row(
@@ -508,7 +270,67 @@ fun ProfilePanel(
 
             Spacer(Modifier.height(12.dp))
             OutlinedButton(
-                onClick = { /* save profile */ },
+                onClick = {
+                    val user = auth.currentUser
+                    if (user == null) {
+                        Toast.makeText(context, "No authenticated user", Toast.LENGTH_SHORT).show()
+                        return@OutlinedButton
+                    }
+
+                    val displayName = username.trim().ifEmpty {
+                        user.email?.substringBefore("@") ?: "User"
+                    }
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(displayName)
+                        .build()
+
+                    user.updateProfile(profileUpdates).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(context, "Profile saved", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, task.exception?.localizedMessage ?: "Failed to save profile", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    if (email.isNotBlank() && email != user.email) {
+                        user.updateEmail(email).addOnCompleteListener { emailTask ->
+                            if (!emailTask.isSuccessful) {
+                                Toast.makeText(context, emailTask.exception?.localizedMessage ?: "Failed to update email", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
+                    // Password change: requires re-auth
+                    if (newPass.isNotBlank()) {
+                        if (newPass.length < 6) {
+                            Toast.makeText(context, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                            return@OutlinedButton
+                        }
+                        if (currentPass.isBlank()) {
+                            Toast.makeText(context, "Enter your current password to change it", Toast.LENGTH_SHORT).show()
+                            return@OutlinedButton
+                        }
+                        val userEmail = user.email
+                        if (userEmail.isNullOrBlank()) {
+                            Toast.makeText(context, "No email on this account; cannot change password", Toast.LENGTH_SHORT).show()
+                            return@OutlinedButton
+                        }
+                        val credential = EmailAuthProvider.getCredential(userEmail, currentPass)
+                        user.reauthenticate(credential).addOnCompleteListener { reauthTask ->
+                            if (reauthTask.isSuccessful) {
+                                user.updatePassword(newPass).addOnCompleteListener { pwTask ->
+                                    if (pwTask.isSuccessful) {
+                                        Toast.makeText(context, "Password updated", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, pwTask.exception?.localizedMessage ?: "Failed to update password", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(context, reauthTask.exception?.localizedMessage ?: "Re-authentication failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                },
                 border = BorderStroke(2.dp, Color(0xFF00A6FF)),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth()
@@ -552,52 +374,3 @@ fun ProfileField(
     )
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PrivacyPanel(
-    modifier: Modifier = Modifier,
-) {
-    var front by rememberSaveable { mutableStateOf(true) }
-    var fingerOutlines by rememberSaveable { mutableStateOf(true) }
-
-    val accent = Color(0xFF00A6FF)
-
-    Card(
-        modifier = modifier
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(2.dp, Color(0xFFFFFFFF)),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Privacy",
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            ToggleRow(
-                title = "Send Usage Statistics",
-                checked = front,
-                onCheckedChange = { front = it },
-                accent = accent
-            )
-
-            ToggleRow(
-                title = "Public Profile",
-                checked = fingerOutlines,
-                onCheckedChange = { fingerOutlines = it },
-                accent = accent
-            )
-
-            Spacer(Modifier.height(16.dp))
-
-        }
-    }
-}
