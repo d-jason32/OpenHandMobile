@@ -40,7 +40,7 @@ import kotlinx.coroutines.delay
 fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
     LaunchedEffect(Unit) {
         delay(1000)
-        SoundManager.play("hi")
+        SoundManager.play("nice")
     }
 
     Scaffold(

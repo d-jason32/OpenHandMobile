@@ -230,43 +230,62 @@ fun CameraStreamScreen(
         Spacer(Modifier.height(16.dp))
 
         // Mode buttons (send to server)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            OutlinedButton(
-                onClick = { ws.setMode("letters") },
-                modifier = Modifier.weight(1f),
-                border = BorderStroke(2.dp, Color.White),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(50)
-            ) { Text("Letters") }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedButton(
+                    onClick = { ws.setMode("letters") },
+                    modifier = Modifier.weight(1f),
+                    border = BorderStroke(2.dp, Color.White),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(50)
+                ) { Text("Letters") }
 
-            OutlinedButton(
-                onClick = { ws.setMode("numbers") },
-                modifier = Modifier.weight(1f),
-                border = BorderStroke(2.dp, Color.White),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(50)
-            ) { Text("Numbers") }
+                OutlinedButton(
+                    onClick = { ws.setMode("numbers") },
+                    modifier = Modifier.weight(1f),
+                    border = BorderStroke(2.dp, Color.White),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(50)
+                ) { Text("Numbers") }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedButton(
+                    onClick = { ws.setMode("phrases") },
+                    modifier = Modifier.weight(1f),
+                    border = BorderStroke(2.dp, Color.White),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(50)
+                ) { Text("Phrases") }
 
-            OutlinedButton(
-                onClick = { ws.setMode("auto") },
-                modifier = Modifier.weight(1f),
-                border = BorderStroke(2.dp, Color.White),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(50)
-            ) { Text("Auto") }
+                OutlinedButton(
+                    onClick = { ws.setMode("auto") },
+                    modifier = Modifier.weight(1f),
+                    border = BorderStroke(2.dp, Color.White),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(50)
+                ) { Text("Auto") }
+            }
         }
     }
 }

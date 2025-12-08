@@ -152,8 +152,8 @@ fun MyApp(
         NavHost(
             navController = nav,
             // app will start at the introduction screen
-            //startDestination = "home"
-            startDestination = "intro"
+            startDestination = "home"
+            //startDestination = "intro"
             //startDestination = "CongratulationsScreen"
         ) {
             composable("intro") {
