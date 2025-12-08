@@ -270,8 +270,13 @@ fun MyApp(
                 val id = backStackEntry.arguments?.getString("id") ?: ""
                 GradingScreen(nav = nav, id = id)
             }
+            composable("viewProfile/{userId}") { backStackEntry ->
+                val userId = backStackEntry.arguments?.getString("userId") ?: ""
+                ViewProfileScreen(nav = nav, userId = userId)
+            }
 
 
+            composable("addfriends") { AddFriends(nav) }
 
 
 

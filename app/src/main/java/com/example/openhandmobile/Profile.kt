@@ -46,6 +46,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -66,6 +67,8 @@ import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.tasks.await
 
 
 @Composable
@@ -73,11 +76,31 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
 
     // Pull username from Firebase Auth (fallback to email prefix or "User")
     var username by remember { mutableStateOf("User") }
+    var currentXp by remember { mutableStateOf(0L) }
+    var friendsCount by remember { mutableIntStateOf(0) }
     val currentUser = Firebase.auth.currentUser
+
     LaunchedEffect(currentUser?.uid) {
         username = currentUser?.displayName
             ?: currentUser?.email?.substringBefore("@")
             ?: "User"
+
+        val uid = currentUser?.uid ?: return@LaunchedEffect
+        val db = Firebase.firestore
+        try {
+            val doc = db.collection("users").document(uid).get().await()
+            if (doc.exists()) {
+                currentXp = when (val raw = doc.get("xp")) {
+                    is Number -> raw.toLong()
+                    is String -> raw.toLongOrNull() ?: 0L
+                    else -> 0L
+                }
+                val friends = doc.get("friends") as? List<*>
+                friendsCount = friends?.size ?: 0
+            }
+        } catch (e: Exception) {
+            // Handle error
+        }
     }
 
     Scaffold(
@@ -109,12 +132,9 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                 ProfilePage(
                     nav = nav,
                     username = username,
-                    level = 10,
-                    xp = 20000,
-                    xpTarget = 50000,
-                    friendsCount = 12,
-                    streakDays = 7,
-                    accuracyPercent = 90,
+                    xp = currentXp,
+                    xpTarget = 5000,
+                    friendsCount = friendsCount,
                     achievements = listOf(
                         Achievement("a1", "Level 10 Reached", "Hit level 10"),
                         Achievement("a2", "7-Day Streak", "Learned for 1 weeek straight"),
@@ -137,12 +157,9 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
 fun ProfilePage(
     nav: NavHostController,
     username: String,
-    level: Int,
-    xp: Int,
+    xp: Long,
     xpTarget: Int,
     friendsCount: Int,
-    streakDays: Int,
-    accuracyPercent: Int,
     achievements: List<Achievement>,
     badges: List<Achievement>,
     modifier: Modifier = Modifier
@@ -184,20 +201,7 @@ fun ProfilePage(
                         fontSize = 24.sp
                     )
                     Spacer(Modifier.height(4.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Outlined.EmojiEvents,
-                            contentDescription = "Level",
-                            tint = Color.White
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            text = "Level $level",
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
+                    // Level row removed
                 }
             }
             Spacer(Modifier.height(12.dp))
@@ -226,12 +230,11 @@ fun ProfilePage(
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.Start
             ) {
                 StatChip(label = "Friends", value = friendsCount.toString(), accent = accent) {
                 }
-                StatChip(label = "Streak", value = "${streakDays}d", accent = accent)
-                StatChip(label = "Accuracy", value = "$accuracyPercent%", accent = accent)
+                // Streak and Accuracy chips removed
             }
             Spacer(Modifier.height(16.dp))
         }
@@ -239,7 +242,9 @@ fun ProfilePage(
         // Add Friend
         item {
             OutlinedButton(
-                onClick = {  },
+                onClick = {
+                    nav.navigate("addfriends")
+                },
                 border = BorderStroke(2.dp, accent),
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Transparent,
@@ -341,7 +346,7 @@ private fun StatChip(
             modifier = Modifier
                 .widthIn(min = 96.dp)
                 .padding(horizontal = 14.dp, vertical = 10.dp),
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(value, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Text(label, color = Color.White.copy(alpha = 0.7f), fontSize = 12.sp)

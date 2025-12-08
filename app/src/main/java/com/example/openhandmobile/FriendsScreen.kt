@@ -31,6 +31,11 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,9 +49,47 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.tasks.await
 
 @Composable
 fun FriendsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
+
+    var username by remember { mutableStateOf("User") }
+    var friends by remember { mutableStateOf<List<FriendUi>>(emptyList()) }
+    val currentUser = Firebase.auth.currentUser
+    LaunchedEffect(currentUser?.uid) {
+        username = currentUser?.displayName
+            ?: currentUser?.email?.substringBefore("@")
+            ?: "User"
+
+        val uid = currentUser?.uid ?: return@LaunchedEffect
+        val db = Firebase.firestore
+        try {
+            val meSnap = db.collection("users").document(uid).get().await()
+            val friendIds = (meSnap.get("friends") as? List<*>)?.filterIsInstance<String>().orEmpty()
+            if (friendIds.isEmpty()) {
+                friends = emptyList()
+            } else {
+                val fetched = friendIds.mapNotNull { fid ->
+                    val doc = db.collection("users").document(fid).get().await()
+                    if (!doc.exists()) return@mapNotNull null
+                    val name = (doc.getString("userName") ?: doc.getString("nickname") ?: "User").ifBlank { "User" }
+                    val xpVal = when (val raw = doc.get("xp")) {
+                        is Number -> raw.toLong()
+                        is String -> raw.toLongOrNull() ?: 0L
+                        else -> 0L
+                    }
+                    FriendUi(fid, name, xpVal)
+                }.sortedByDescending { it.xp }
+                friends = fetched
+            }
+        } catch (_: Exception) {
+            friends = emptyList()
+        }
+    }
 
     Scaffold(
         containerColor = Color(0xFF1A1A1A),
@@ -77,7 +120,7 @@ fun FriendsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
                 Spacer(Modifier.height(12.dp))
 
                 Text(
-                    text = "@your_username",
+                    text = "@$username",
                     fontSize = 36.sp,
                     color = Color.White
                 )
@@ -108,28 +151,13 @@ fun FriendsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
                 Spacer(Modifier.height(16.dp))
 
 
-                Spacer(Modifier.height(16.dp))
-
-                val leaders = listOf(
-                    "Lorraine" to 20000,
-                    "Esteban" to 950,
-                    "Justin" to 720,
-                    "Esteban" to 718,
-                    "Josh" to 719,
-                    "Kevin" to 500,
-                    "Zoe" to 400,
-                    "Mike" to 300,
-                    "Joe" to 200,
-                    "Eva" to 100,
-                )
-
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
                     contentPadding = PaddingValues(bottom = 96.dp)
                 ) {
-                    itemsIndexed(leaders) { index, (name, xp) ->
+                    itemsIndexed(friends) { index, friend ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -144,7 +172,7 @@ fun FriendsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = name.first().toString(),
+                                    text = friend.name.firstOrNull()?.uppercase() ?: "?",
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -156,7 +184,7 @@ fun FriendsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Text(
-                                    text = name,
+                                    text = friend.name,
                                     color = Color.White,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.SemiBold
@@ -165,7 +193,7 @@ fun FriendsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
                             }
 
                             OutlinedButton(
-                                onClick = {  },
+                                onClick = { nav.navigate("viewProfile/${friend.id}") },
                                 border = BorderStroke(2.dp, Color.White),
                                 shape = RoundedCornerShape(20.dp),
                                 contentPadding = PaddingValues(horizontal = 40.dp, vertical = 4.dp),
@@ -183,3 +211,5 @@ fun FriendsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
         }
     }
 }
+
+data class FriendUi(val id: String, val name: String, val xp: Long)
