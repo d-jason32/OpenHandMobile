@@ -82,20 +82,24 @@ private fun roadmapChain(
     type2: String, label2: String,
     type3: String, label3: String
 ): String {
-    // Build from the end backwards
+    val enc: (String) -> String = { URLEncoder.encode(it, StandardCharsets.UTF_8.name()) }
+    
+    // Build from the end backwards - each level gets encoded once
     // Lesson 3 goes to CongratulationsScreen (which awards XP and goes to badgeWin)
     val finalLessonId = "${type3}_$label3"
-    val encFinalId = URLEncoder.encode(finalLessonId, StandardCharsets.UTF_8.name())
-    val congratsRoute = "CongratulationsScreen?id=$encFinalId"
-    val lesson3Route = "roadmapPractice/$type3/$label3?next=$congratsRoute"
-    val encLesson3 = URLEncoder.encode(lesson3Route, StandardCharsets.UTF_8.name())
+    val congratsRoute = "CongratulationsScreen?id=${enc(finalLessonId)}"
     
-    // Lesson 2 goes to lesson 3
-    val lesson2Route = "roadmapPractice/$type2/$label2?next=$encLesson3"
-    val encLesson2 = URLEncoder.encode(lesson2Route, StandardCharsets.UTF_8.name())
+    // lesson3's next is the congrats route (encode once for embedding in URL)
+    val lesson3Next = enc(congratsRoute)
+    val lesson3Route = "roadmapPractice/$type3/$label3?next=$lesson3Next"
     
-    // Lesson 1 goes to lesson 2
-    return "roadmapPractice/$type1/$label1?next=$encLesson2"
+    // lesson2's next is lesson3 route (encode once)
+    val lesson2Next = enc(lesson3Route)
+    val lesson2Route = "roadmapPractice/$type2/$label2?next=$lesson2Next"
+    
+    // lesson1's next is lesson2 route (encode once)
+    val lesson1Next = enc(lesson2Route)
+    return "roadmapPractice/$type1/$label1?next=$lesson1Next"
 }
 
 @Composable
