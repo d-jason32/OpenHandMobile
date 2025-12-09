@@ -80,10 +80,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
             var selection by remember { mutableStateOf("letters") }
 
             // Pick server and mode based on selection (phrases use gestures model, no mode)
-            val serverUrl = when (selection) {
-                "phrases" -> "ws://10.0.2.2:8000/ws?model=gestures"
-                else -> "ws://10.0.2.2:8000/ws?model=letters"
-            }
+            val serverUrl = "ws://10.0.2.2:8000/ws" // always base; select model via message
             val initialMode = when (selection) {
                 "letters" -> "letters"
                 "numbers" -> "numbers"
@@ -124,9 +121,10 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .weight(1f)
                 ) {
-                    CameraStreamScreen(
+                CameraStreamScreen(
                         serverUrl = serverUrl,
-                        initialMode = initialMode
+                        initialMode = initialMode,
+                        selectedModel = selection
                     )
                 }
 
@@ -156,6 +154,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
 fun CameraStreamScreen(
     serverUrl: String = "ws://10.0.2.2:8000/ws",
     initialMode: String? = null,
+    selectedModel: String = "letters",
     onPrediction: ((String, Float) -> Unit)? = null
 ) {
     val ctx = LocalContext.current
@@ -173,9 +172,18 @@ fun CameraStreamScreen(
             onPrediction?.invoke(l, p)
         }.also { it.connect() }
     }
-    LaunchedEffect(initialMode, ws) {
-        initialMode?.let { mode ->
-            ws.setMode(mode)
+    LaunchedEffect(initialMode, selectedModel, ws) {
+        when (selectedModel) {
+            "phrases" -> ws.setModel("gestures")
+            "letters" -> {
+                ws.setModel("letters")
+                ws.setMode("letters")
+            }
+            "numbers" -> {
+                ws.setModel("letters")
+                ws.setMode("numbers")
+            }
+            else -> ws.setModel("letters")
         }
     }
     DisposableEffect(Unit) {

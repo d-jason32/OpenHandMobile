@@ -74,6 +74,10 @@ class InferenceWs(
         ws?.send("""{"type":"set_mode","mode":"$mode"}""")
     }
 
+    fun setModel(model: String) {
+        ws?.send("""{"type":"set_model","model":"$model"}""")
+    }
+
     fun sendJpegBase64(b64: String) {
         ws?.send("""{"type":"frame","jpeg_b64":"$b64"}""")
     }
