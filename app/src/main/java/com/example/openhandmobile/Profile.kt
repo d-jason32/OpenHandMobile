@@ -22,17 +22,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Book
-import androidx.compose.material.icons.outlined.EmojiEvents
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.MilitaryTech
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PersonAdd
-import androidx.compose.material.icons.outlined.Route
-import androidx.compose.material.icons.outlined.Science
-import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -59,7 +50,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -78,6 +68,7 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
     var username by remember { mutableStateOf("User") }
     var currentXp by remember { mutableStateOf(0L) }
     var friendsCount by remember { mutableIntStateOf(0) }
+    var badgeDrawables by remember { mutableStateOf<List<Int>>(emptyList()) }
     val currentUser = Firebase.auth.currentUser
 
     LaunchedEffect(currentUser?.uid) {
@@ -97,6 +88,20 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                 }
                 val friends = doc.get("friends") as? List<*>
                 friendsCount = friends?.size ?: 0
+                val badgeNames = doc.get("badges") as? List<*>
+                badgeDrawables = badgeNames?.mapNotNull { name ->
+                    when (name as? String) {
+                        "badge1" -> R.drawable.badge1
+                        "badge2" -> R.drawable.badge2
+                        "badge3" -> R.drawable.badge3
+                        "badge4" -> R.drawable.badge4
+                        "badge5" -> R.drawable.badge5
+                        "badge6" -> R.drawable.badge6
+                        "badge7" -> R.drawable.badge7
+                        "badge8" -> R.drawable.badge8
+                        else -> null
+                    }
+                } ?: emptyList()
             }
         } catch (e: Exception) {
             // Handle error
@@ -135,16 +140,7 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                     xp = currentXp,
                     xpTarget = 5000,
                     friendsCount = friendsCount,
-                    achievements = listOf(
-                        Achievement("a1", "Level 10 Reached", "Hit level 10"),
-                        Achievement("a2", "7-Day Streak", "Learned for 1 weeek straight"),
-                        Achievement("a3", "Perfect ‘A-Z’", "Finished alphabet course")
-                    ),
-                    badges = listOf(
-                        Achievement("b1", "Smart Hand", "Finish all the lessons."),
-                        Achievement("b2", "Speedster", "Finish a lesson in under a minute."),
-                        Achievement("b3", "Early Bird", "Finish a lesson before 9 A.M.")
-                    )
+                    badges = badgeDrawables
                 )
 
             }
@@ -160,8 +156,8 @@ fun ProfilePage(
     xp: Long,
     xpTarget: Int,
     friendsCount: Int,
-    achievements: List<Achievement>,
-    badges: List<Achievement>,
+    achievements: List<Achievement> = emptyList(), // deprecated; kept for signature compatibility
+    badges: List<Int>,
     modifier: Modifier = Modifier
 ) {
     val accent = Color(0xFF00A6FF)
@@ -262,40 +258,6 @@ fun ProfilePage(
             Spacer(Modifier.height(20.dp))
         }
 
-        if (achievements.isNotEmpty()) {
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.StarOutline,
-                        contentDescription = null,
-                        tint = Color.White
-                    )
-                    Spacer(Modifier.width(8.dp))
-                    Text(
-                        "Achievements",
-                        color = Color.White,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 18.sp
-                    )
-                }
-                Spacer(Modifier.height(10.dp))
-            }
-            item {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    contentPadding = PaddingValues(horizontal = 2.dp)
-                ) {
-                    items(achievements.size) { i ->
-                        AchievementCard(achievements[i])
-                    }
-                }
-                Spacer(Modifier.height(20.dp))
-            }
-        }
-
         if (badges.isNotEmpty()) {
             item {
                 Row(
@@ -323,7 +285,7 @@ fun ProfilePage(
                     contentPadding = PaddingValues(horizontal = 2.dp)
                 ) {
                     items(badges.size) { i ->
-                        BadgesCard(badges[i])
+                        BadgeImageCard(badgeRes = badges[i])
                     }
                 }
                 Spacer(Modifier.height(20.dp))
@@ -378,89 +340,26 @@ data class Achievement(
     val achieved: Boolean = true
 )
 
+
 @Composable
-private fun AchievementCard(a: Achievement) {
+private fun BadgeImageCard(badgeRes: Int) {
     val accent = Color(0xFF00A6FF)
     val shape = RoundedCornerShape(16.dp)
 
-    Column(
+    Box(
         modifier = Modifier
             .width(180.dp)
             .height(160.dp)
-            .border(2.dp, if (a.achieved) accent else Color.White.copy(alpha = 0.35f), shape)
+            .border(2.dp, accent, shape)
             .clip(shape)
             .background(Color(0xFF2A2A2A).copy(alpha = 0.5f))
-            .padding(12.dp)
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = a.icon,
-                contentDescription = a.title,
-                tint = if (a.achieved) accent else Color.White.copy(alpha = 0.6f)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                a.title,
-                color = Color.White,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-        if (a.subtitle.isNotEmpty()) {
-            Spacer(Modifier.height(4.dp))
-            Text(
-                a.subtitle,
-                color = Color.White.copy(alpha = 0.75f),
-                fontSize = 12.sp,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-    }
-}
-
-
-@Composable
-private fun BadgesCard(a: Achievement) {
-    val accent = Color(0xFF00A6FF)
-    val shape = RoundedCornerShape(16.dp)
-
-    Column(
-        modifier = Modifier
-            .width(180.dp)
-            .height(160.dp)
-            .border(2.dp, if (a.achieved) accent else Color.White.copy(alpha = 0.35f), shape)
-            .clip(shape)
-            .background(Color(0xFF2A2A2A).copy(alpha = 0.5f))
-            .padding(12.dp)
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = a.icon,
-                contentDescription = a.title,
-                tint = if (a.achieved) accent else Color.White.copy(alpha = 0.6f)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                a.title,
-                color = Color.White,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-        if (a.subtitle.isNotEmpty()) {
-            Spacer(Modifier.height(4.dp))
-            Text(
-                a.subtitle,
-                color = Color.White.copy(alpha = 0.75f),
-                fontSize = 12.sp,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
+        Image(
+            painter = painterResource(id = badgeRes),
+            contentDescription = "Badge",
+            modifier = Modifier.size(120.dp)
+        )
     }
 }

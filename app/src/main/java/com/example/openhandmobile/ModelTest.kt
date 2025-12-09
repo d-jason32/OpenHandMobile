@@ -115,6 +115,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
 @Composable
 fun CameraStreamScreen(
     serverUrl: String = "ws://10.0.2.2:8000/ws",
+    initialMode: String? = null,
     onPrediction: ((String, Float) -> Unit)? = null
 ) {
     val ctx = LocalContext.current
@@ -131,6 +132,9 @@ fun CameraStreamScreen(
             prob = p
             onPrediction?.invoke(l, p)
         }.also { it.connect() }
+    }
+    LaunchedEffect(initialMode) {
+        initialMode?.let { ws.setMode(it) }
     }
     DisposableEffect(Unit) {
         onDispose { ws.close() }
@@ -227,65 +231,6 @@ fun CameraStreamScreen(
             }
         }
 
-        Spacer(Modifier.height(16.dp))
-
-        // Mode buttons (send to server)
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedButton(
-                    onClick = { ws.setMode("letters") },
-                    modifier = Modifier.weight(1f),
-                    border = BorderStroke(2.dp, Color.White),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(50)
-                ) { Text("Letters") }
-
-                OutlinedButton(
-                    onClick = { ws.setMode("numbers") },
-                    modifier = Modifier.weight(1f),
-                    border = BorderStroke(2.dp, Color.White),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(50)
-                ) { Text("Numbers") }
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedButton(
-                    onClick = { ws.setMode("phrases") },
-                    modifier = Modifier.weight(1f),
-                    border = BorderStroke(2.dp, Color.White),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(50)
-                ) { Text("Phrases") }
-
-                OutlinedButton(
-                    onClick = { ws.setMode("auto") },
-                    modifier = Modifier.weight(1f),
-                    border = BorderStroke(2.dp, Color.White),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(50)
-                ) { Text("Auto") }
-            }
-        }
+        // Mode buttons removed; mode is set programmatically by callers (e.g., GradingScreen initialMode)
     }
 }

@@ -270,6 +270,7 @@ fun MyApp(
                 val id = backStackEntry.arguments?.getString("id") ?: ""
                 GradingScreen(nav = nav, id = id)
             }
+            composable("badgeWin") { BadgeWinScreen(nav = nav) }
             composable("viewProfile/{userId}") { backStackEntry ->
                 val userId = backStackEntry.arguments?.getString("userId") ?: ""
                 ViewProfileScreen(nav = nav, userId = userId)

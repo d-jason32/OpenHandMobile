@@ -82,8 +82,15 @@ fun GradingScreen(
                     .weight(1f)
                     .fillMaxWidth()
             ) {
+                val initialMode = when (type) {
+                    "letter" -> "letters"
+                    "number" -> "numbers"
+                    "word" -> "phrases"
+                    else -> "phrases"
+                }
                 CameraStreamScreen(
                     serverUrl = "ws://10.0.2.2:8000/ws",
+                    initialMode = initialMode,
                     onPrediction = { label, prob ->
                         currentLabel = label
                         currentProb = prob

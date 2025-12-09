@@ -30,6 +30,7 @@ object SoundManager {
         soundMap["practice"] = soundPool!!.load(context, R.raw.practice, 1)
         soundMap["questions"] = soundPool!!.load(context, R.raw.questions, 1)
         soundMap["nice"] = soundPool!!.load(context, R.raw.nice, 1)
+        soundMap["wow"] = soundPool!!.load(context, R.raw.wow, 1)
 
 
 

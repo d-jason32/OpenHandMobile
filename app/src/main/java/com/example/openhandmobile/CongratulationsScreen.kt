@@ -123,7 +123,7 @@ fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier)
                 OutlinedButton(
                     onClick = {
                         SoundManager.play("click")
-                        nav.navigate("classes")
+                        nav.navigate("badgeWin")
                     },
                     modifier = Modifier.fillMaxWidth()
                         .padding(horizontal = 20.dp),
@@ -134,7 +134,7 @@ fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier)
                     )
                 ) {
                     Text(
-                        "Go back",
+                        "Next",
                         fontSize = 16.sp
                     )
                 }
