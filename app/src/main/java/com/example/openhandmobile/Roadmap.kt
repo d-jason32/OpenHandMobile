@@ -99,6 +99,7 @@ fun Roadmap(nav: NavHostController, modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CarouselExample(
+                    nav = nav,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 50.dp, vertical = 20.dp)
@@ -110,7 +111,7 @@ fun Roadmap(nav: NavHostController, modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun CarouselExample(modifier: Modifier = Modifier) {
+fun CarouselExample(nav: NavHostController, modifier: Modifier = Modifier) {
     data class CarouselItem(
         val id: Int,
         @DrawableRes val imageResId: Int,
@@ -120,6 +121,8 @@ fun CarouselExample(modifier: Modifier = Modifier) {
 
     val carouselItems = remember {
         listOf(
+            // Letters - Easy
+            // Class for Y -> Grading -> Congrats Screen -> Class for W -> Grading -> Congrats Screen -> Class for A -> Grading -> Congrats Screen -> Back to Carousel 
             CarouselItem(0, R.drawable.handy_white_logo, "Letters - Easy", locked = false),
             CarouselItem(1, R.drawable.handy_closed_eyes, "Letters - Medium", locked = false),
             CarouselItem(2, R.drawable.handy_smart_crop_fix, "Letters - Hard", locked = false),
@@ -206,7 +209,25 @@ fun CarouselExample(modifier: Modifier = Modifier) {
                         Spacer(Modifier.height(20.dp))
                     }
                     Button(
-                        onClick = { /* navigate when unlocked */ },
+                        onClick = {
+                            when (item.id) {
+                                // Letters - Easy: Y -> W -> A
+                                0 -> nav.navigate(nextLessonRoute("classY", next = "LessonCongrats?current=classW&next=classA"))
+                                // Letters - Medium: M -> N -> O
+                                1 -> nav.navigate(nextLessonRoute("classM", next = "classN"))
+                                // Letters - Hard: Z -> X -> V
+                                2 -> nav.navigate(nextLessonRoute("classZ", next = "classX"))
+                                // Letters and Numbers - Easy: 0 -> 1 -> 2
+                                3 -> nav.navigate(nextLessonRoute("class0", next = "class1"))
+                                // Letters and Numbers - Medium: 5 -> 6 -> 7
+                                4 -> nav.navigate(nextLessonRoute("class5", next = "class6"))
+                                // Letters and Numbers - Hard: 9 -> 8 -> 7
+                                5 -> nav.navigate(nextLessonRoute("class9", next = "class8"))
+                                // Common Words - Hard: Eat -> Drink -> Sleep
+                                6 -> nav.navigate(nextLessonRoute("classEat", next = "classDrink"))
+                                else -> { /* no-op */ }
+                            }
+                        },
                         enabled = !item.locked,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -235,12 +256,3 @@ fun CarouselExample(modifier: Modifier = Modifier) {
 }
 
 
-// Numbers
-
-// Letters
-
-// Numbers + letters
-
-// Common words
-
-// Letters and words

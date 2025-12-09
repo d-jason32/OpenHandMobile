@@ -278,6 +278,17 @@ fun MyApp(
                 val id = backStackEntry.arguments?.getString("id") ?: ""
                 CongratulationsScreen(nav, id)
             }
+            composable(
+                route = "LessonCongrats?current={current}&next={next}",
+                arguments = listOf(
+                    navArgument("current") { nullable = true; defaultValue = "" },
+                    navArgument("next") { nullable = true; defaultValue = "" }
+                )
+            ) { backStackEntry ->
+                val current = backStackEntry.arguments?.getString("current") ?: ""
+                val next = backStackEntry.arguments?.getString("next") ?: ""
+                LessonCongrats(nav, currentLessonId = current, nextRoute = next)
+            }
             composable("grading/{id}") { backStackEntry ->
                 val id = backStackEntry.arguments?.getString("id") ?: ""
                 GradingScreen(nav = nav, id = id)
