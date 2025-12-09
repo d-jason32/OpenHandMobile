@@ -43,9 +43,15 @@ fun GradingScreen(
         rawLabel.replace('_', ' ')
     }
 
+    // Normalize labels so spacing/case differences don't block matches (e.g., "DIAPER" vs "Diaper")
+    val normalize: (String) -> String = { s ->
+        s.trim().lowercase().replace(" ", "").replace("_", "")
+    }
+
     // ✅ When prediction matches the expected label with high confidence, go to Congratulations
     LaunchedEffect(currentLabel, currentProb, hasNavigated, expectedLabel) {
-        if (!hasNavigated && currentLabel == expectedLabel && currentProb >= 0.20f) {
+        val match = normalize(currentLabel) == normalize(expectedLabel)
+        if (!hasNavigated && match && currentProb >= 0.20f) {
             hasNavigated = true
             nav.navigate("CongratulationsScreen")
         }
@@ -82,14 +88,19 @@ fun GradingScreen(
                     .weight(1f)
                     .fillMaxWidth()
             ) {
+                // Words (phrases) use the gesture model; letters/numbers stay on the default model.
+                val serverUrl = when (type) {
+                    "word" -> "ws://10.0.2.2:8000/ws?model=gestures"
+                    else -> "ws://10.0.2.2:8000/ws?model=letters"
+                }
+                // Only send mode for letters/numbers; gesture model ignores it.
                 val initialMode = when (type) {
                     "letter" -> "letters"
                     "number" -> "numbers"
-                    "word" -> "phrases"
-                    else -> "phrases"
+                    else -> null
                 }
                 CameraStreamScreen(
-                    serverUrl = "ws://10.0.2.2:8000/ws",
+                    serverUrl = serverUrl,
                     initialMode = initialMode,
                     onPrediction = { label, prob ->
                         currentLabel = label

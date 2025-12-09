@@ -76,18 +76,57 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
                 .padding(paddingValues)
         ) {
 
+            var selection by remember { mutableStateOf("letters") }
+
+            // Pick server and mode based on selection
+            val serverUrl = when (selection) {
+                "phrases" -> "ws://10.0.2.2:8000/ws?model=gestures"
+                else -> "ws://10.0.2.2:8000/ws?model=letters"
+            }
+            val initialMode = when (selection) {
+                "letters" -> "letters"
+                "numbers" -> "numbers"
+                else -> null // gesture model ignores mode
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                // Mode chooser
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    listOf("letters" to "Letters", "numbers" to "Numbers", "phrases" to "Phrases").forEach { (key, label) ->
+                        val selected = selection == key
+                        OutlinedButton(
+                            onClick = { selection = key },
+                            border = BorderStroke(2.dp, if (selected) Color(0xFF00A6FF) else Color(0xFFFFFFFF)),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent,
+                                contentColor = if (selected) Color(0xFF00A6FF) else Color.White
+                            )
+                        ) {
+                            Text(label, fontSize = 14.sp)
+                        }
+                    }
+                }
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
                 ) {
-                    CameraStreamScreen(serverUrl = "ws://10.0.2.2:8000/ws")
+                    CameraStreamScreen(
+                        serverUrl = serverUrl,
+                        initialMode = initialMode
+                    )
                 }
 
                 Spacer(Modifier.height(16.dp))
@@ -126,15 +165,17 @@ fun CameraStreamScreen(
     var prob by remember { mutableStateOf<Float>(0f) }
 
     // WebSocket
-    val ws = remember {
+    val ws = remember(serverUrl) {
         InferenceWs(serverUrl) { l, p ->
             label = l
             prob = p
             onPrediction?.invoke(l, p)
         }.also { it.connect() }
     }
-    LaunchedEffect(initialMode) {
-        initialMode?.let { ws.setMode(it) }
+    LaunchedEffect(initialMode, ws) {
+        initialMode?.let { mode ->
+            ws.setMode(mode)
+        }
     }
     DisposableEffect(Unit) {
         onDispose { ws.close() }
