@@ -306,7 +306,7 @@ private fun StatChip(
     val content = @Composable {
         Column(
             modifier = Modifier
-                .widthIn(min = 96.dp)
+                .fillMaxWidth()
                 .padding(horizontal = 14.dp, vertical = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
