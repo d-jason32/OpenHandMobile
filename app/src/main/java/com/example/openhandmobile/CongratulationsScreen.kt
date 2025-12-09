@@ -35,12 +35,27 @@ import com.example.openhandmobile.SoundManager
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
 import kotlinx.coroutines.delay
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.firestore
 
 @Composable
 fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
     LaunchedEffect(Unit) {
         delay(1000)
         SoundManager.play("nice")
+        // Award XP to the current user
+        val user = Firebase.auth.currentUser
+        if (user != null) {
+            try {
+                Firebase.firestore.collection("users")
+                    .document(user.uid)
+                    .update("xp", FieldValue.increment(10))
+            } catch (_: Exception) {
+                // Ignore failures silently
+            }
+        }
     }
 
     Scaffold(
@@ -64,6 +79,16 @@ fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier)
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+
+                Text(
+                    text = "+10 XP",
+                    color = Color(0xFF00A6FF),
+                    fontFamily = Raleway,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 32.sp,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(Modifier.height(12.dp))
 
 
                 Image(

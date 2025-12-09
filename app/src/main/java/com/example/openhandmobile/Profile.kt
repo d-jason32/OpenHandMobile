@@ -230,7 +230,7 @@ fun ProfilePage(
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.Center
             ) {
                 StatChip(label = "Friends", value = friendsCount.toString(), accent = accent) {
                 }

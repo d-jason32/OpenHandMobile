@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.openhandmobile.SoundManager
 
 @Composable
 fun BottomNavBar(navController: NavHostController) {
@@ -45,6 +46,7 @@ fun BottomNavBar(navController: NavHostController) {
             NavigationBarItem(
                 selected = currentRoute == routes[index],
                 onClick = {
+                    SoundManager.play("click")
                     val route = routes[index]
                     if (navController.currentBackStackEntry?.destination?.route != route) {
                         navController.navigate(route) {

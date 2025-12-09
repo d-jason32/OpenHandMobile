@@ -131,6 +131,21 @@ fun AddFriends(nav: NavHostController, modifier: Modifier = Modifier) {
 
                 Spacer(Modifier.height(12.dp))
 
+                OutlinedButton(
+                    onClick = { nav.navigate("profile") },
+                    border = BorderStroke(2.dp, Color.White),
+                    shape = RoundedCornerShape(14.dp),
+                    contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Go Back", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                }
+
+                Spacer(Modifier.height(12.dp))
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Filled.Group,
