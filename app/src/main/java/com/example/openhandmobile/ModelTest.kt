@@ -2,6 +2,7 @@ package com.example.openhandmobile
 
 import android.Manifest
 import android.view.ViewGroup
+import android.view.Surface
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -78,7 +79,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
 
             var selection by remember { mutableStateOf("letters") }
 
-            // Pick server and mode based on selection
+            // Pick server and mode based on selection (phrases use gestures model, no mode)
             val serverUrl = when (selection) {
                 "phrases" -> "ws://10.0.2.2:8000/ws?model=gestures"
                 else -> "ws://10.0.2.2:8000/ws?model=letters"
@@ -100,7 +101,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     listOf("letters" to "Letters", "numbers" to "Numbers", "phrases" to "Phrases").forEach { (key, label) ->
@@ -196,12 +197,17 @@ fun CameraStreamScreen(
         val provider = ProcessCameraProvider.getInstance(ctx).get()
         provider.unbindAll()
 
-        val preview = Preview.Builder().build().also {
+        val rotation = pv.display?.rotation ?: Surface.ROTATION_0
+
+        val preview = Preview.Builder()
+            .setTargetRotation(rotation)
+            .build().also {
             it.setSurfaceProvider(pv.surfaceProvider)
         }
 
         val analyzer = ImageAnalysis.Builder()
             .setTargetResolution(Size(640, 480))
+            .setTargetRotation(rotation)
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build().also {
                 it.setAnalyzer(cameraExecutor, FrameSender(ws) { ctx })

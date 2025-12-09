@@ -38,22 +38,56 @@ import kotlinx.coroutines.delay
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.firestore
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
+import kotlinx.coroutines.tasks.await
 
 @Composable
-fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier) {
-    LaunchedEffect(Unit) {
+fun CongratulationsScreen(
+    nav: NavHostController,
+    lessonId: String = "",
+    modifier: Modifier = Modifier
+) {
+    LaunchedEffect(lessonId) {
         delay(1000)
         SoundManager.play("nice")
         // Award XP to the current user
         val user = Firebase.auth.currentUser
+        val decodedId = try { URLDecoder.decode(lessonId, StandardCharsets.UTF_8.name()) } catch (_: Exception) { lessonId }
+        val resName = lessonIdToResName(decodedId)
         if (user != null) {
+            val docRef = Firebase.firestore.collection("users").document(user.uid)
+            val displayName = user.displayName
+                ?: user.email?.substringBefore("@")
+                ?: "User"
+            val updates = if (resName.isNullOrBlank()) {
+                mapOf(
+                    "xp" to FieldValue.increment(10),
+                    "userName" to displayName
+                )
+            } else {
+                mapOf(
+                    "xp" to FieldValue.increment(10),
+                    "learned" to FieldValue.arrayUnion(resName),
+                    "userName" to displayName
+                )
+            }
             try {
-                Firebase.firestore.collection("users")
-                    .document(user.uid)
-                    .update("xp", FieldValue.increment(10))
+                // Ensure document exists, then apply update
+                val snap = docRef.get().await()
+                if (!snap.exists()) {
+                    docRef.set(mapOf("xp" to 0), SetOptions.merge()).await()
+                }
+                docRef.update(updates).await()
             } catch (_: Exception) {
-                // Ignore failures silently
+                // Fallback: merge set to create/update in one step
+                try {
+                    docRef.set(updates, SetOptions.merge()).await()
+                } catch (_: Exception) {
+                    // Ignore last-chance failure silently
+                }
             }
         }
     }
@@ -145,4 +179,10 @@ fun CongratulationsScreen(nav: NavHostController, modifier: Modifier = Modifier)
             }
         }
     }
+}
+
+private fun lessonIdToResName(lessonId: String): String? {
+    if (lessonId.isBlank()) return null
+    val normalized = lessonId.lowercase().replace(" ", "_").replace("-", "_")
+    return normalized.ifBlank { null }
 }

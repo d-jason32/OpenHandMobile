@@ -1,5 +1,6 @@
 package com.example.openhandmobile
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -46,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -60,6 +63,39 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
+data class LearnedItem(
+    val name: String,
+    val drawableRes: Int?
+)
+
+data class Achievement(
+    val id: String,
+    val title: String,
+    val subtitle: String = "",
+    val icon: ImageVector = Icons.Outlined.MilitaryTech,
+    val achieved: Boolean = true
+)
+
+private fun resolveLearnedDrawable(context: Context, learnedName: String): Int? {
+    val drawableName = learnedToDrawableCandidate(learnedName) ?: return null
+    if (drawableName.isBlank()) return null
+    val pkg = context.packageName
+    val id = context.resources.getIdentifier(drawableName, "drawable", pkg)
+    return if (id != 0) id else null
+}
+
+private fun learnedToDrawableCandidate(learnedName: String): String? {
+    val normalized = learnedName.trim().lowercase().replace(" ", "_")
+    if (normalized.isBlank()) return null
+    return when {
+        normalized.startsWith("letter_") -> "d${normalized.removePrefix("letter_")}"
+        normalized.startsWith("number_") -> "d${normalized.removePrefix("number_")}"
+        normalized.startsWith("word_") -> normalized.removePrefix("word_")
+        normalized.startsWith("phrase_") -> normalized.removePrefix("phrase_")
+        else -> normalized
+    }
+}
+
 
 @Composable
 fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
@@ -69,7 +105,9 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
     var currentXp by remember { mutableStateOf(0L) }
     var friendsCount by remember { mutableIntStateOf(0) }
     var badgeDrawables by remember { mutableStateOf<List<Int>>(emptyList()) }
+    var learnedItems by remember { mutableStateOf<List<LearnedItem>>(emptyList()) }
     val currentUser = Firebase.auth.currentUser
+    val context = LocalContext.current
 
     LaunchedEffect(currentUser?.uid) {
         username = currentUser?.displayName
@@ -102,6 +140,15 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                         else -> null
                     }
                 } ?: emptyList()
+
+                val learnedNames = doc.get("learned") as? List<*>
+                learnedItems = learnedNames
+                    ?.mapNotNull { name ->
+                        val raw = name as? String ?: return@mapNotNull null
+                        val drawable = resolveLearnedDrawable(context, raw)
+                        LearnedItem(raw, drawable)
+                    }
+                    ?: emptyList()
             }
         } catch (e: Exception) {
             // Handle error
@@ -140,7 +187,8 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                     xp = currentXp,
                     xpTarget = 5000,
                     friendsCount = friendsCount,
-                    badges = badgeDrawables
+                    badges = badgeDrawables,
+                    learned = learnedItems
                 )
 
             }
@@ -158,6 +206,7 @@ fun ProfilePage(
     friendsCount: Int,
     achievements: List<Achievement> = emptyList(), // deprecated; kept for signature compatibility
     badges: List<Int>,
+    learned: List<LearnedItem>,
     modifier: Modifier = Modifier
 ) {
     val accent = Color(0xFF00A6FF)
@@ -291,7 +340,42 @@ fun ProfilePage(
                 Spacer(Modifier.height(20.dp))
             }
         }
+
+        if (learned.isNotEmpty()) {
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.MilitaryTech,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        "Learned",
+                        color = Color.White,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp
+                    )
+                }
+                Spacer(Modifier.height(10.dp))
+            }
+            item {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 2.dp)
+                ) {
+                    items(learned.size) { i ->
+                        LearnedCard(item = learned[i])
+                    }
+                }
+                Spacer(Modifier.height(20.dp))
+            }
+        }
     }
+
 }
 
 
@@ -332,14 +416,6 @@ private fun StatChip(
     }
 }
 
-data class Achievement(
-    val id: String,
-    val title: String,
-    val subtitle: String = "",
-    val icon: ImageVector = Icons.Outlined.MilitaryTech,
-    val achieved: Boolean = true
-)
-
 
 @Composable
 private fun BadgeImageCard(badgeRes: Int) {
@@ -361,5 +437,39 @@ private fun BadgeImageCard(badgeRes: Int) {
             contentDescription = "Badge",
             modifier = Modifier.size(120.dp)
         )
+    }
+}
+
+@Composable
+private fun LearnedCard(item: LearnedItem) {
+    val accent = Color(0xFF00A6FF)
+    val shape = RoundedCornerShape(16.dp)
+
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(160.dp)
+            .border(2.dp, accent, shape)
+            .clip(shape)
+            .background(Color(0xFF2A2A2A).copy(alpha = 0.5f))
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        if (item.drawableRes != null) {
+            Image(
+                painter = painterResource(id = item.drawableRes),
+                contentDescription = item.name,
+                modifier = Modifier.size(120.dp)
+            )
+        } else {
+            Text(
+                text = item.name.replace("_", " ").replaceFirstChar { it.uppercase() },
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
     }
 }

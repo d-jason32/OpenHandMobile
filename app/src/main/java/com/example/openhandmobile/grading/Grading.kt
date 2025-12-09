@@ -13,6 +13,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun GradingScreen(
@@ -53,7 +55,8 @@ fun GradingScreen(
         val match = normalize(currentLabel) == normalize(expectedLabel)
         if (!hasNavigated && match && currentProb >= 0.20f) {
             hasNavigated = true
-            nav.navigate("CongratulationsScreen")
+            val encodedId = URLEncoder.encode(id, StandardCharsets.UTF_8.name())
+            nav.navigate("CongratulationsScreen?id=$encodedId")
         }
     }
 

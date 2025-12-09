@@ -24,6 +24,7 @@ import com.google.firebase.auth.auth
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.compose.runtime.SideEffect
+import androidx.navigation.navArgument
 import com.example.openhandmobile.classes.class0
 import com.example.openhandmobile.classes.class1
 import com.example.openhandmobile.classes.class2
@@ -152,8 +153,8 @@ fun MyApp(
         NavHost(
             navController = nav,
             // app will start at the introduction screen
-            startDestination = "home"
-            //startDestination = "intro"
+            //startDestination = "home"
+            startDestination = "intro"
             //startDestination = "CongratulationsScreen"
         ) {
             composable("intro") {
@@ -265,7 +266,18 @@ fun MyApp(
             composable("classSleep") { classSleep(nav) }
             composable("classSorry") { classSorry(nav) }
             composable("classThankYou") { classThankYou(nav) }
-            composable("CongratulationsScreen") { CongratulationsScreen(nav) }
+            composable(
+                route = "CongratulationsScreen?id={id}",
+                arguments = listOf(
+                    navArgument("id") {
+                        nullable = true
+                        defaultValue = ""
+                    }
+                )
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id") ?: ""
+                CongratulationsScreen(nav, id)
+            }
             composable("grading/{id}") { backStackEntry ->
                 val id = backStackEntry.arguments?.getString("id") ?: ""
                 GradingScreen(nav = nav, id = id)
