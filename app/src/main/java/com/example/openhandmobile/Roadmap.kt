@@ -71,6 +71,32 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.navigation.NavHostController
 import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+
+/**
+ * Builds a chained roadmap route: lesson1 -> lesson2 -> lesson3 -> CongratulationsScreen -> badgeWin -> roadmap
+ */
+private fun roadmapChain(
+    type1: String, label1: String,
+    type2: String, label2: String,
+    type3: String, label3: String
+): String {
+    // Build from the end backwards
+    // Lesson 3 goes to CongratulationsScreen (which awards XP and goes to badgeWin)
+    val finalLessonId = "${type3}_$label3"
+    val encFinalId = URLEncoder.encode(finalLessonId, StandardCharsets.UTF_8.name())
+    val congratsRoute = "CongratulationsScreen?id=$encFinalId"
+    val lesson3Route = "roadmapPractice/$type3/$label3?next=$congratsRoute"
+    val encLesson3 = URLEncoder.encode(lesson3Route, StandardCharsets.UTF_8.name())
+    
+    // Lesson 2 goes to lesson 3
+    val lesson2Route = "roadmapPractice/$type2/$label2?next=$encLesson3"
+    val encLesson2 = URLEncoder.encode(lesson2Route, StandardCharsets.UTF_8.name())
+    
+    // Lesson 1 goes to lesson 2
+    return "roadmapPractice/$type1/$label1?next=$encLesson2"
+}
 
 @Composable
 fun Roadmap(nav: NavHostController, modifier: Modifier = Modifier) {
@@ -211,20 +237,20 @@ fun CarouselExample(nav: NavHostController, modifier: Modifier = Modifier) {
                     Button(
                         onClick = {
                             when (item.id) {
-                                // Letters - Easy: Y -> W -> A
-                                0 -> nav.navigate(nextLessonRoute("classY", next = "LessonCongrats?current=classW&next=classA"))
+                                // Letters - Easy: Y -> W -> A -> back to roadmap
+                                0 -> nav.navigate(roadmapChain("letter", "Y", "letter", "W", "letter", "A"))
                                 // Letters - Medium: M -> N -> O
-                                1 -> nav.navigate(nextLessonRoute("classM", next = "classN"))
+                                1 -> nav.navigate(roadmapChain("letter", "M", "letter", "N", "letter", "O"))
                                 // Letters - Hard: Z -> X -> V
-                                2 -> nav.navigate(nextLessonRoute("classZ", next = "classX"))
+                                2 -> nav.navigate(roadmapChain("letter", "Z", "letter", "X", "letter", "V"))
                                 // Letters and Numbers - Easy: 0 -> 1 -> 2
-                                3 -> nav.navigate(nextLessonRoute("class0", next = "class1"))
+                                3 -> nav.navigate(roadmapChain("number", "0", "number", "1", "number", "2"))
                                 // Letters and Numbers - Medium: 5 -> 6 -> 7
-                                4 -> nav.navigate(nextLessonRoute("class5", next = "class6"))
-                                // Letters and Numbers - Hard: 9 -> 8 -> 7
-                                5 -> nav.navigate(nextLessonRoute("class9", next = "class8"))
+                                4 -> nav.navigate(roadmapChain("number", "5", "number", "6", "number", "7"))
+                                // Letters and Numbers - Hard: 9 -> 8 -> A
+                                5 -> nav.navigate(roadmapChain("number", "9", "number", "8", "letter", "A"))
                                 // Common Words - Hard: Eat -> Drink -> Sleep
-                                6 -> nav.navigate(nextLessonRoute("classEat", next = "classDrink"))
+                                6 -> nav.navigate(roadmapChain("word", "EAT", "word", "DRINK", "word", "SLEEP"))
                                 else -> { /* no-op */ }
                             }
                         },

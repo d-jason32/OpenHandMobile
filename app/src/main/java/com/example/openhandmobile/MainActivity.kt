@@ -293,6 +293,31 @@ fun MyApp(
                 val id = backStackEntry.arguments?.getString("id") ?: ""
                 GradingScreen(nav = nav, id = id)
             }
+            // Roadmap-specific routes
+            composable(
+                route = "roadmapPractice/{type}/{label}?next={next}",
+                arguments = listOf(
+                    navArgument("type") { defaultValue = "" },
+                    navArgument("label") { defaultValue = "" },
+                    navArgument("next") { nullable = true; defaultValue = "" }
+                )
+            ) { backStackEntry ->
+                val type = backStackEntry.arguments?.getString("type") ?: ""
+                val label = backStackEntry.arguments?.getString("label") ?: ""
+                val next = backStackEntry.arguments?.getString("next") ?: ""
+                RoadmapPractice(nav, lessonType = type, lessonLabel = label, nextRoute = next)
+            }
+            composable(
+                route = "roadmapGrading/{id}?next={next}",
+                arguments = listOf(
+                    navArgument("id") { defaultValue = "" },
+                    navArgument("next") { nullable = true; defaultValue = "" }
+                )
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id") ?: ""
+                val next = backStackEntry.arguments?.getString("next") ?: ""
+                RoadmapGradingScreen(nav = nav, id = id, nextRoute = next)
+            }
             composable("badgeWin") { BadgeWinScreen(nav = nav) }
             composable("viewProfile/{userId}") { backStackEntry ->
                 val userId = backStackEntry.arguments?.getString("userId") ?: ""
