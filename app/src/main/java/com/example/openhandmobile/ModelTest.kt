@@ -154,7 +154,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
 fun CameraStreamScreen(
     serverUrl: String = "ws://10.0.2.2:8000/ws",
     initialMode: String? = null,
-    selectedModel: String = "letters",
+    selectedModel: String? = null,
     onPrediction: ((String, Float) -> Unit)? = null
 ) {
     val ctx = LocalContext.current
@@ -165,7 +165,7 @@ fun CameraStreamScreen(
     var prob by remember { mutableStateOf<Float>(0f) }
 
     // WebSocket
-    val ws = remember(serverUrl) {
+    val ws = remember(serverUrl, selectedModel) {
         InferenceWs(serverUrl) { l, p ->
             label = l
             prob = p
@@ -174,7 +174,7 @@ fun CameraStreamScreen(
     }
     LaunchedEffect(initialMode, selectedModel, ws) {
         when (selectedModel) {
-            "phrases" -> ws.setModel("gestures")
+            "phrases", "gestures" -> ws.setModel("gestures")
             "letters" -> {
                 ws.setModel("letters")
                 ws.setMode("letters")
@@ -183,10 +183,17 @@ fun CameraStreamScreen(
                 ws.setModel("letters")
                 ws.setMode("numbers")
             }
-            else -> ws.setModel("letters")
+            null -> {
+                // Only apply mode if provided; leave model as-is
+                initialMode?.let { ws.setMode(it) }
+            }
+            else -> {
+                ws.setModel(selectedModel)
+                initialMode?.let { ws.setMode(it) }
+            }
         }
     }
-    DisposableEffect(Unit) {
+    DisposableEffect(ws) {
         onDispose { ws.close() }
     }
 

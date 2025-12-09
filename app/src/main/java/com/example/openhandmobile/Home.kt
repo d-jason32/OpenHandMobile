@@ -145,19 +145,6 @@ fun Home(nav: NavHostController, modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             )
             {
-                OutlinedButton(
-                    onClick = { nav.navigate("modeltest") },
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 20.dp),
-                    border = BorderStroke(2.dp, Color(0xFF00A6FF)),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color(0xFF00A6FF)
-                    )
-                ) {
-                    Text("Test the Model",
-                        fontSize = 16.sp)
-                }
 
                 Spacer(Modifier.height(10.dp))
 

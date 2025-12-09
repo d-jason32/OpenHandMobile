@@ -92,19 +92,23 @@ fun GradingScreen(
                     .fillMaxWidth()
             ) {
                 // Words (phrases) use the gesture model; letters/numbers stay on the default model.
-                val serverUrl = when (type) {
-                    "word" -> "ws://10.0.2.2:8000/ws?model=gestures"
-                    else -> "ws://10.0.2.2:8000/ws?model=letters"
-                }
+                val serverUrl = "ws://10.0.2.2:8000/ws" // model chosen via message
                 // Only send mode for letters/numbers; gesture model ignores it.
                 val initialMode = when (type) {
                     "letter" -> "letters"
                     "number" -> "numbers"
                     else -> null
                 }
+                val selectedModel = when (type) {
+                    "word" -> "gestures"
+                    "letter" -> "letters"
+                    "number" -> "numbers"
+                    else -> "letters"
+                }
                 CameraStreamScreen(
                     serverUrl = serverUrl,
                     initialMode = initialMode,
+                    selectedModel = selectedModel,
                     onPrediction = { label, prob ->
                         currentLabel = label
                         currentProb = prob
