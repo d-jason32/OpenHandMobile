@@ -88,6 +88,7 @@ private fun learnedToDrawableCandidate(learnedName: String): String? {
     val normalized = learnedName.trim().lowercase().replace(" ", "_")
     if (normalized.isBlank()) return null
     return when {
+        normalized == "letter_o" -> "do_" // resource for O has an underscore suffix
         normalized.startsWith("letter_") -> "d${normalized.removePrefix("letter_")}"
         normalized.startsWith("number_") -> "d${normalized.removePrefix("number_")}"
         normalized.startsWith("word_") -> normalized.removePrefix("word_")
@@ -106,6 +107,8 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
     var friendsCount by remember { mutableIntStateOf(0) }
     var badgeDrawables by remember { mutableStateOf<List<Int>>(emptyList()) }
     var learnedItems by remember { mutableStateOf<List<LearnedItem>>(emptyList()) }
+    var skillLevel by remember { mutableStateOf("beginner") }
+    var practiceFrequency by remember { mutableStateOf("daily") }
     val currentUser = Firebase.auth.currentUser
     val context = LocalContext.current
 
@@ -149,6 +152,8 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                         LearnedItem(raw, drawable)
                     }
                     ?: emptyList()
+                skillLevel = (doc.get("skill_level") as? String).orEmpty().ifBlank { "beginner" }
+                practiceFrequency = (doc.get("practice_frequency") as? String).orEmpty().ifBlank { "daily" }
             }
         } catch (e: Exception) {
             // Handle error
@@ -188,7 +193,9 @@ fun Profile(nav: NavHostController, modifier: Modifier = Modifier) {
                     xpTarget = 5000,
                     friendsCount = friendsCount,
                     badges = badgeDrawables,
-                    learned = learnedItems
+                    learned = learnedItems,
+                    skillLevel = skillLevel,
+                    practiceFrequency = practiceFrequency
                 )
 
             }
@@ -207,6 +214,8 @@ fun ProfilePage(
     achievements: List<Achievement> = emptyList(), // deprecated; kept for signature compatibility
     badges: List<Int>,
     learned: List<LearnedItem>,
+    skillLevel: String,
+    practiceFrequency: String,
     modifier: Modifier = Modifier
 ) {
     val accent = Color(0xFF00A6FF)
@@ -246,7 +255,11 @@ fun ProfilePage(
                         fontSize = 24.sp
                     )
                     Spacer(Modifier.height(4.dp))
-                    // Level row removed
+                    Text(
+                        text = "Skill: ${skillLevel.replaceFirstChar { it.uppercase() }} • Practice: ${practiceFrequency.replaceFirstChar { it.uppercase() }}",
+                        color = Color.White.copy(alpha = 0.8f),
+                        fontSize = 14.sp
+                    )
                 }
             }
             Spacer(Modifier.height(12.dp))

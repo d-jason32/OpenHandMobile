@@ -49,6 +49,11 @@ import com.example.openhandmobile.ui.theme.Raleway
 import com.example.squares.Squares
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.firestore
+import com.example.openhandmobile.OnboardingState
+import com.example.openhandmobile.PracticeReminderScheduler
 
 @Composable
 fun RegisterScreen(nav: NavHostController) {
@@ -252,6 +257,34 @@ fun RegisterScreen(nav: NavHostController) {
                             auth.createUserWithEmailAndPassword(email, password)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
+                                        val user = auth.currentUser
+                                        val displayName = username.ifBlank { email.substringBefore("@") }
+                                        user?.updateProfile(
+                                            UserProfileChangeRequest.Builder()
+                                                .setDisplayName(displayName)
+                                                .build()
+                                        )
+
+                                        val uid = user?.uid
+                                        if (uid != null) {
+                                            val db = Firebase.firestore
+                                            val data = mapOf(
+                                                "userName" to displayName,
+                                                "xp" to 0,
+                                                "badges" to emptyList<String>(),
+                                                "friends" to emptyList<String>(),
+                                                "learned" to emptyList<String>(),
+                                                "skill_level" to OnboardingState.skillLevel,
+                                                "practice_frequency" to OnboardingState.practiceFrequency
+                                            )
+                                            db.collection("users").document(uid)
+                                                .set(data, SetOptions.merge())
+                                        }
+
+                                        PracticeReminderScheduler.schedule(
+                                            context,
+                                            OnboardingState.practiceFrequency
+                                        )
                                         nav.navigate("login") {
                                             popUpTo("register") { inclusive = true }
                                         }

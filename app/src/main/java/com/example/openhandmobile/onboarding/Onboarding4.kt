@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.openhandmobile.OnboardingState
 import com.example.openhandmobile.BottomNavBar
 import com.example.openhandmobile.R
 import com.example.openhandmobile.SoundManager
@@ -100,6 +101,7 @@ fun Onboarding4(nav: NavHostController, modifier: Modifier = Modifier) {
                 OutlinedButton(
                     onClick = {
                         SoundManager.play("click")
+                        OnboardingState.setPractice("daily")
                         nav.navigate("register")
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -119,6 +121,7 @@ fun Onboarding4(nav: NavHostController, modifier: Modifier = Modifier) {
                 OutlinedButton(
                     onClick = {
                         SoundManager.play("click")
+                        OnboardingState.setPractice("weekly")
                         nav.navigate("register")
                     },
                     modifier = Modifier.fillMaxWidth()
