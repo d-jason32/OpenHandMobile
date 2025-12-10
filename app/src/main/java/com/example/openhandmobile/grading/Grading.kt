@@ -56,7 +56,7 @@ fun GradingScreen(
         if (!hasNavigated && match && currentProb >= 0.20f) {
             hasNavigated = true
             val encodedId = URLEncoder.encode(id, StandardCharsets.UTF_8.name())
-            nav.navigate("CongratulationsScreen?id=$encodedId")
+            nav.navigate("CongratulationsScreen?id=$encodedId&source=classes")
         }
     }
 
@@ -92,7 +92,7 @@ fun GradingScreen(
                     .fillMaxWidth()
             ) {
                 // Words (phrases) use the gesture model; letters/numbers stay on the default model.
-                val serverUrl = "ws://10.0.2.2:8000/ws" // model chosen via message
+                val serverUrl = "ws://127.0.0.1:8000/ws" // model chosen via message
                 // Only send mode for letters/numbers; gesture model ignores it.
                 val initialMode = when (type) {
                     "letter" -> "letters"

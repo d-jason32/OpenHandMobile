@@ -48,6 +48,7 @@ import kotlinx.coroutines.tasks.await
 fun CongratulationsScreen(
     nav: NavHostController,
     lessonId: String = "",
+    source: String = "classes",
     modifier: Modifier = Modifier
 ) {
     LaunchedEffect(lessonId) {
@@ -157,7 +158,8 @@ fun CongratulationsScreen(
                 OutlinedButton(
                     onClick = {
                         SoundManager.play("click")
-                        nav.navigate("badgeWin")
+                        val safeSource = source.ifBlank { "classes" }
+                        nav.navigate("badgeWin?source=$safeSource")
                     },
                     modifier = Modifier.fillMaxWidth()
                         .padding(horizontal = 20.dp),

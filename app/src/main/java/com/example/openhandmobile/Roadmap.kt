@@ -87,7 +87,7 @@ private fun roadmapChain(
     // Build from the end backwards - each level gets encoded once
     // Lesson 3 goes to CongratulationsScreen (which awards XP and goes to badgeWin)
     val finalLessonId = "${type3}_$label3"
-    val congratsRoute = "CongratulationsScreen?id=${enc(finalLessonId)}"
+    val congratsRoute = "CongratulationsScreen?id=${enc(finalLessonId)}&source=roadmap"
     
     // lesson3's next is the congrats route (encode once for embedding in URL)
     val lesson3Next = enc(congratsRoute)

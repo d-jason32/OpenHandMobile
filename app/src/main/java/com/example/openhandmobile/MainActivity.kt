@@ -102,9 +102,14 @@ class MainActivity : ComponentActivity() {
 
         auth = Firebase.auth
 
+        val startDest = "intro"
+
         setContent {
             OpenHandMobileTheme {
-                MyApp(modifier = Modifier.fillMaxSize())
+                MyApp(
+                    modifier = Modifier.fillMaxSize(),
+                    startDestination = startDest
+                )
             }
         }
     }
@@ -142,7 +147,8 @@ fun MyAppPreview() {
 // Main app function to allow for navigation
 @Composable
 fun MyApp(
-    modifier: Modifier = Modifier)
+    modifier: Modifier = Modifier,
+    startDestination: String = "intro")
 {
     SetLightStatusBar()
 
@@ -154,7 +160,7 @@ fun MyApp(
             navController = nav,
             // app will start at the introduction screen
             //startDestination = "home"
-            startDestination = "intro"
+            startDestination = startDestination
             //startDestination = "CongratulationsScreen"
         ) {
             composable("intro") {
@@ -267,16 +273,21 @@ fun MyApp(
             composable("classSorry") { classSorry(nav) }
             composable("classThankYou") { classThankYou(nav) }
             composable(
-                route = "CongratulationsScreen?id={id}",
+                route = "CongratulationsScreen?id={id}&source={source}",
                 arguments = listOf(
                     navArgument("id") {
                         nullable = true
                         defaultValue = ""
+                    },
+                    navArgument("source") {
+                        nullable = true
+                        defaultValue = "classes"
                     }
                 )
             ) { backStackEntry ->
                 val id = backStackEntry.arguments?.getString("id") ?: ""
-                CongratulationsScreen(nav, id)
+                val source = backStackEntry.arguments?.getString("source") ?: "classes"
+                CongratulationsScreen(nav, lessonId = id, source = source)
             }
             composable(
                 route = "LessonCongrats?current={current}&next={next}",
@@ -318,7 +329,18 @@ fun MyApp(
                 val next = backStackEntry.arguments?.getString("next") ?: ""
                 RoadmapGradingScreen(nav = nav, id = id, nextRoute = next)
             }
-            composable("badgeWin") { BadgeWinScreen(nav = nav) }
+            composable(
+                route = "badgeWin?source={source}",
+                arguments = listOf(
+                    navArgument("source") {
+                        nullable = true
+                        defaultValue = "classes"
+                    }
+                )
+            ) { backStackEntry ->
+                val source = backStackEntry.arguments?.getString("source") ?: "classes"
+                BadgeWinScreen(nav = nav, source = source)
+            }
             composable("viewProfile/{userId}") { backStackEntry ->
                 val userId = backStackEntry.arguments?.getString("userId") ?: ""
                 ViewProfileScreen(nav = nav, userId = userId)

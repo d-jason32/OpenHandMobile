@@ -207,7 +207,6 @@ fun ProfilePanel(
 ) {
     val outline = Color(0xFFD1D3D5)
     var username by rememberSaveable { mutableStateOf("") }
-    var email by rememberSaveable { mutableStateOf("") }
     var currentPass by rememberSaveable { mutableStateOf("") }
     var newPass by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
@@ -215,7 +214,6 @@ fun ProfilePanel(
     val currentUser = auth.currentUser
     LaunchedEffect(currentUser?.uid) {
         username = currentUser?.displayName ?: currentUser?.email?.substringBefore("@") ?: ""
-        email = currentUser?.email ?: ""
     }
 
     Card(
@@ -242,7 +240,6 @@ fun ProfilePanel(
             Spacer(Modifier.height(12.dp))
 
             ProfileField(label = "Username", text = username, onTextChange = { username = it }, outline)
-            ProfileField(label = "Email", text = email, onTextChange = { email = it }, outline)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -289,14 +286,6 @@ fun ProfilePanel(
                             Toast.makeText(context, "Profile saved", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(context, task.exception?.localizedMessage ?: "Failed to save profile", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                    if (email.isNotBlank() && email != user.email) {
-                        user.updateEmail(email).addOnCompleteListener { emailTask ->
-                            if (!emailTask.isSuccessful) {
-                                Toast.makeText(context, emailTask.exception?.localizedMessage ?: "Failed to update email", Toast.LENGTH_SHORT).show()
-                            }
                         }
                     }
 

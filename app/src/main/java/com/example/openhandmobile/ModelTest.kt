@@ -80,7 +80,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
             var selection by remember { mutableStateOf("letters") }
 
             // Pick server and mode based on selection (phrases use gestures model, no mode)
-            val serverUrl = "ws://10.0.2.2:8000/ws" // always base; select model via message
+            val serverUrl = "ws://127.0.0.1:8000/ws" // always base; select model via message
             val initialMode = when (selection) {
                 "letters" -> "letters"
                 "numbers" -> "numbers"
@@ -152,7 +152,7 @@ fun ModelTest(nav: NavHostController, modifier: Modifier = Modifier) {
 }
 @Composable
 fun CameraStreamScreen(
-    serverUrl: String = "ws://10.0.2.2:8000/ws",
+    serverUrl: String = "ws://127.0.0.1:8000/ws",
     initialMode: String? = null,
     selectedModel: String? = null,
     onPrediction: ((String, Float) -> Unit)? = null
@@ -228,7 +228,7 @@ fun CameraStreamScreen(
                 it.setAnalyzer(cameraExecutor, FrameSender(ws) { ctx })
             }
 
-        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+        val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
         provider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, analyzer)
     }
 
